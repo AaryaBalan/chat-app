@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Contact from '../components/Contact';
 import ChatArea from '../components/ChatArea';
+import DefaultChat from '../components/DefaultChat';
 
 const Chat = () => {
     const navigate = useNavigate();
@@ -64,18 +65,33 @@ const Chat = () => {
                 )}
 
                 {/* CHAT AREA */}
-                <div
-                    className={`
+                {
+                    chatPerson &&
+                    <div
+                        className={`
                         ${chatPerson ? 'block' : 'hidden'}
                         w-full h-full
                         md:block md:w-2/3 md:h-full
                     `}
-                >
-                    <ChatArea
-                        chatPerson={chatPerson}
-                        setChatPerson={setChatPerson}
-                    />
-                </div>
+                    >
+                        <ChatArea
+                            chatPerson={chatPerson}
+                            setChatPerson={setChatPerson}
+                        />
+                    </div>
+                }
+
+
+                {/* default chat */}
+                {chatPerson === undefined &&
+                    <div className={`
+                        ${chatPerson ? 'block' : 'hidden'}
+                        w-full h-full
+                        md:block md:w-2/3 md:h-full
+                    `}>
+                        < DefaultChat />
+                    </div>
+                }
             </div>
         </div>
     );

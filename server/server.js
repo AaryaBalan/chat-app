@@ -20,6 +20,8 @@ const server = app.listen(process.env.PORT, () => {
 // Routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const messageRoutes = require('./routes/messageRoutes')
 
 app.use('/api/auth', authRoutes);
 app.use('/users', userRoutes);
+app.use('/message', messageRoutes)
