@@ -9,7 +9,7 @@ const Chat = () => {
     const [userList, setUserList] = useState([]);
     const [currentUser, setCurrentUser] = useState(undefined);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [chatPerson, setChatPerson] = useState(undefined)
+    const [chatPerson, setChatPerson] = useState(undefined);
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -38,19 +38,43 @@ const Chat = () => {
     }, []);
 
     function handleChatPerson(person) {
-        setChatPerson(person)
+        setChatPerson(person);
     }
 
     return (
         <div className="bg-[#131324] min-h-screen w-full flex justify-center items-center px-2 py-4 md:px-6 md:py-10">
-            <div className="flex flex-col md:flex-row gap-y-4 md:gap-x-6 bg-[#00000076] w-full max-w-9xl rounded-lg p-4 md:p-8 h-[90vh] overflow-hidden">
+            <div className="flex flex-col md:flex-row gap-y-4 md:gap-x-6 bg-[#00000076] w-full max-w-7xl rounded-lg p-4 md:p-8 h-[90vh] overflow-hidden">
+
+                {/* CONTACTS */}
                 {isLoaded && (
-                    <div className="w-full md:w-1/3 h-full overflow-y-auto md:overflow-hidden">
-                        <Contact userList={userList} currentUser={currentUser} handleChatPerson={handleChatPerson} chatPerson={chatPerson} />
+                    <div
+                        className={`
+                            ${chatPerson ? 'hidden' : 'block'}
+                            w-full h-full
+                            md:block md:w-1/3 md:h-full
+                        `}
+                    >
+                        <Contact
+                            userList={userList}
+                            currentUser={currentUser}
+                            handleChatPerson={handleChatPerson}
+                            chatPerson={chatPerson}
+                        />
                     </div>
                 )}
-                <div className="w-full md:w-2/3 h-full hidden md:block overflow-y-auto">
-                    <ChatArea chatPerson={chatPerson} />
+
+                {/* CHAT AREA */}
+                <div
+                    className={`
+                        ${chatPerson ? 'block' : 'hidden'}
+                        w-full h-full
+                        md:block md:w-2/3 md:h-full
+                    `}
+                >
+                    <ChatArea
+                        chatPerson={chatPerson}
+                        setChatPerson={setChatPerson}
+                    />
                 </div>
             </div>
         </div>
