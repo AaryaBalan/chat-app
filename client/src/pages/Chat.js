@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Contact from '../components/Contact';
 import ChatArea from '../components/ChatArea';
 import DefaultChat from '../components/DefaultChat';
+import { io } from 'socket.io-client'
 
 const Chat = () => {
     const navigate = useNavigate();
@@ -11,6 +12,8 @@ const Chat = () => {
     const [currentUser, setCurrentUser] = useState(undefined);
     const [isLoaded, setIsLoaded] = useState(false);
     const [chatPerson, setChatPerson] = useState(undefined);
+    const socketRef = useRef()
+    const [onlineUsers, setOnlineUsers] = useState([])
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -38,6 +41,18 @@ const Chat = () => {
         getAllUsersExceptMe();
     }, []);
 
+    useEffect(() => {
+        if (currentUser && currentUser._id) {
+            socketRef.current = io('http://localhost:5000/')
+            socketRef.current.emit('online', currentUser._id)
+            socketRef.current.emit('addUser', currentUser._id)
+            socketRef.current.on('online', users => setOnlineUsers(users))
+        }
+    }, [currentUser])
+
+    useEffect(() => {
+    }, [])
+
     function handleChatPerson(person) {
         setChatPerson(person);
     }
@@ -60,6 +75,7 @@ const Chat = () => {
                             currentUser={currentUser}
                             handleChatPerson={handleChatPerson}
                             chatPerson={chatPerson}
+                            onlineUsers={onlineUsers}
                         />
                     </div>
                 )}
@@ -77,6 +93,7 @@ const Chat = () => {
                         <ChatArea
                             chatPerson={chatPerson}
                             setChatPerson={setChatPerson}
+                            socketRef={socketRef}
                         />
                     </div>
                 }
