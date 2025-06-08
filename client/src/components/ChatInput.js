@@ -4,7 +4,7 @@ import EmojiPicker from 'emoji-picker-react';
 import axios from 'axios';
 import notification from '../assets/notification.mp3'
 
-const ChatInput = ({ setUserList, handleLatestSelfMessage, chatPerson, socketRef }) => {
+const ChatInput = ({ setLatestMessage, setUserList, handleLatestSelfMessage, chatPerson, socketRef }) => {
     const [messageInput, setMessageInput] = useState('');
     const [isEmojiDisplay, setIsEmojiDisplay] = useState(false);
     const emojiPickerRef = useRef(null);
@@ -34,8 +34,21 @@ const ChatInput = ({ setUserList, handleLatestSelfMessage, chatPerson, socketRef
             reciever: chatPerson._id,
             message: messageInput
         })
+
+        //empty the text area
         setMessageInput('');
+        // update the latest self message with time to render it in message area
         handleLatestSelfMessage(data.message.message, data.message.createdAt)
+        // update the latest message to render it in contacts components
+        setLatestMessage(prev => ({
+            ...prev,
+            [currentUser._id]: {
+                sender: currentUser,
+                reciever: chatPerson,
+                message: data.message.message
+            }
+        }))
+        // update the recent user with the atmost top
         setUserList(prev => {
             const filtered = prev.filter(user => user._id !== chatPerson._id)
             return [chatPerson, ...filtered]

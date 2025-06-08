@@ -16,16 +16,14 @@ const socketControllers = (io) => {
 
             const socketIdOfReciever = global.usersIdMapSocketId.get(data.reciever)
             const socketIdOfSender = global.usersIdMapSocketId.get(data.sender)
-            const user = await getUserById(data.sender)
+            const sender = await getUserById(data.sender)
+            const reciever = await getUserById(data.reciever)
 
             if (socketIdOfReciever && socketIdOfSender) {
                 socket.to(socketIdOfReciever).emit('recieveMessage', {
                     message: data.message,
-                })
-
-                socket.to(socketIdOfReciever).emit('recent', {
-                    message: data.message,
-                    user
+                    sender,
+                    reciever
                 })
             }
         })

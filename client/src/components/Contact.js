@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-const Contact = ({ socketRef, setUserList, userList, currentUser, handleChatPerson, chatPerson, onlineUsers }) => {
-    console.log(chatPerson, socketRef)
+const Contact = ({ latestMessage, setLatestMessage, socketRef, setUserList, userList, currentUser, handleChatPerson, chatPerson, onlineUsers }) => {
+    console.log(latestMessage)
+
     function handleChatChange(user) {
         handleChatPerson(user)
     }
@@ -20,18 +21,24 @@ const Contact = ({ socketRef, setUserList, userList, currentUser, handleChatPers
         return () => {
             socket.off('typing', handleTyping);
         };
-    }, [socketRef?.current]);
+    }, [socketRef]);
 
     useEffect(() => {
         if (!socketRef.current) return;
         const socket = socketRef.current
-        socket.on('recent', data => {
+        socket.on('recieveMessage', data => {
+            console.log(data)
             setUserList(prev => {
-                const filtered = prev.filter(user => user._id !== data.user._id)
-                return [data.user, ...filtered]
+                const filtered = prev.filter(user => user._id !== data.sender._id)
+                return [data.sender, ...filtered]
             })
+            console.log('d', data)
+            setLatestMessage(prev => ({
+                ...prev,
+                [data.sender._id]: data
+            }))
         })
-    }, [socketRef?.current])
+    }, [socketRef, latestMessage, setLatestMessage, setUserList])
 
 
 
@@ -59,7 +66,7 @@ const Contact = ({ socketRef, setUserList, userList, currentUser, handleChatPers
                                 <div className='text-[#1cd14f] flex gap-x-2'>
                                     <span className='dotSpan'>a</span><span className='dotSpan'>b</span><span className='dotSpan'>c</span>
                                 </div> :
-                                <div>Tap to chat</div>
+                                <div className={`${(latestMessage && latestMessage.sender?._id === user._id) || (latestMessage && latestMessage.reciever?._id === user._id) ? "" : ""}`}>{ latestMessage[user._id] && latestMessage[user._id]['message']}</div>
                             }
                         </div>
                     </div>
@@ -74,7 +81,7 @@ const Contact = ({ socketRef, setUserList, userList, currentUser, handleChatPers
                 />
                 <h2 className="text-white text-base md:text-lg font-semibold truncate">{currentUser?.username}</h2>
             </div>
-        </div>
+        </div >
     );
 };
 

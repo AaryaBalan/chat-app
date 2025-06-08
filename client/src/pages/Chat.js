@@ -8,17 +8,26 @@ import { io } from 'socket.io-client'
 
 const Chat = () => {
     const navigate = useNavigate();
+
+    // userlist => contacts
+    //online users => contacts
     const [userList, setUserList] = useState([]);
+    const [onlineUsers, setOnlineUsers] = useState([])
     const [currentUser, setCurrentUser] = useState(undefined);
+    const [latestMessage, setLatestMessage] = useState({})
+    console.log(latestMessage)
+
+    // checks if all stats were loaded
     const [isLoaded, setIsLoaded] = useState(false);
+
+    // chat person => goes to all chat components
+    //socket ref => goes to all chat components
     const [chatPerson, setChatPerson] = useState(undefined);
     const socketRef = useRef()
-    const [onlineUsers, setOnlineUsers] = useState([])
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
         setCurrentUser(user);
-        setIsLoaded(true);
         if (!user) {
             navigate('/login');
         }
@@ -47,6 +56,7 @@ const Chat = () => {
             socketRef.current.emit('online', currentUser._id)
             socketRef.current.emit('addUser', currentUser._id)
             socketRef.current.on('online', users => setOnlineUsers(users))
+            setIsLoaded(true);
         }
     }, [currentUser])
 
@@ -75,6 +85,8 @@ const Chat = () => {
                             chatPerson={chatPerson}
                             onlineUsers={onlineUsers}
                             socketRef={socketRef}
+                            latestMessage={latestMessage}
+                            setLatestMessage={setLatestMessage}
                         />
                     </div>
                 )}
@@ -94,6 +106,7 @@ const Chat = () => {
                             chatPerson={chatPerson}
                             setChatPerson={setChatPerson}
                             socketRef={socketRef}
+                            setLatestMessage={setLatestMessage}
                         />
                     </div>
                 }

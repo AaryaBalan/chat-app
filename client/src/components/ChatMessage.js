@@ -34,14 +34,15 @@ const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
     useEffect(() => {
         const socket = socketRef.current
         const handleReceive = (data) => {
-            console.log(data)
-            setMessages(prev => [...prev, { self: false, message: data.message, time: new Date() }]);
+            if (data.sender._id === chatPerson._id) {
+                setMessages(prev => [...prev, { self: false, message: data.message, time: new Date() }]);
+            }
         };
         socket.on('recieveMessage', handleReceive);
         return () => {
             socket.off('recieveMessage', handleReceive);
         };
-    }, [socketRef]);
+    }, [socketRef, chatPerson._id]);
 
     //listening typing
     useEffect(() => {
