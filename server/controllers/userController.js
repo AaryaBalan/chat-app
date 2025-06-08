@@ -36,3 +36,13 @@ module.exports.setOffline = async (userId) => {
         return
     }
 }
+
+// get user by id
+module.exports.getUserById = async (userId) => {
+    try {
+        const user = await User.findById(userId)
+        return user
+    } catch (err) {
+        console.log(err)
+    }
+}

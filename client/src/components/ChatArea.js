@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import ChatInput from './ChatInput'
 import ChatMessage from './ChatMessage'
 
-const ChatArea = ({ chatPerson, socketRef }) => {
+const ChatArea = ({ setUserList, chatPerson, socketRef }) => {
     const [latestSelfMessage, setLatestSelfMessage] = useState({})
     const handleLatestSelfMessage = (message, time) => {
         setLatestSelfMessage({ message, time })
@@ -19,7 +19,7 @@ const ChatArea = ({ chatPerson, socketRef }) => {
                 </div>
                 <div className='h-full bg-[#202123] flex flex-col overflow-auto rounded-b-2xl'>
                     <ChatMessage chatPerson={chatPerson} socketRef={socketRef} latestSelfMessage={latestSelfMessage} />
-                    <ChatInput chatPerson={chatPerson} socketRef={socketRef} handleLatestSelfMessage={handleLatestSelfMessage} />
+                    <ChatInput setUserList={setUserList} chatPerson={chatPerson} socketRef={socketRef} handleLatestSelfMessage={handleLatestSelfMessage} />
                 </div>
             </div>
         </>

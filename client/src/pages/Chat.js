@@ -68,6 +68,7 @@ const Chat = () => {
                         `}
                     >
                         <Contact
+                            setUserList={setUserList}
                             userList={userList}
                             currentUser={currentUser}
                             handleChatPerson={handleChatPerson}
@@ -89,6 +90,7 @@ const Chat = () => {
                     `}
                     >
                         <ChatArea
+                            setUserList={setUserList}
                             chatPerson={chatPerson}
                             setChatPerson={setChatPerson}
                             socketRef={socketRef}

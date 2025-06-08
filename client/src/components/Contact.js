@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const Contact = ({ socketRef, userList, currentUser, handleChatPerson, chatPerson, onlineUsers }) => {
+const Contact = ({ socketRef, setUserList, userList, currentUser, handleChatPerson, chatPerson, onlineUsers }) => {
     console.log(chatPerson, socketRef)
     function handleChatChange(user) {
         handleChatPerson(user)
@@ -21,6 +21,17 @@ const Contact = ({ socketRef, userList, currentUser, handleChatPerson, chatPerso
             socket.off('typing', handleTyping);
         };
     }, [socketRef?.current]);
+
+    useEffect(() => {
+        if (!socketRef.current) return;
+        const socket = socketRef.current
+        socket.on('recent', data => {
+            setUserList(prev => {
+                const filtered = prev.filter(user => user._id !== data.user._id)
+                return [data.user, ...filtered]
+            })
+        })
+    }, [socketRef?.current])
 
 
 
@@ -44,10 +55,11 @@ const Contact = ({ socketRef, userList, currentUser, handleChatPerson, chatPerso
                         <div className='truncate'>
                             <h2 className="text-base md:text-lg font-semibold truncate text-inherit">{user.username}</h2>
                             {/* <div className='text-[#1cd14f]'>{typingUserId === user._id && "Typing..."}</div> */}
-                            {typingUserId === user._id &&
+                            {typingUserId === user._id ?
                                 <div className='text-[#1cd14f] flex gap-x-2'>
                                     <span className='dotSpan'>a</span><span className='dotSpan'>b</span><span className='dotSpan'>c</span>
-                                </div>
+                                </div> :
+                                <div>Tap to chat</div>
                             }
                         </div>
                     </div>

@@ -4,7 +4,7 @@ import EmojiPicker from 'emoji-picker-react';
 import axios from 'axios';
 import notification from '../assets/notification.mp3'
 
-const ChatInput = ({ handleLatestSelfMessage, chatPerson, socketRef }) => {
+const ChatInput = ({ setUserList, handleLatestSelfMessage, chatPerson, socketRef }) => {
     const [messageInput, setMessageInput] = useState('');
     const [isEmojiDisplay, setIsEmojiDisplay] = useState(false);
     const emojiPickerRef = useRef(null);
@@ -36,6 +36,10 @@ const ChatInput = ({ handleLatestSelfMessage, chatPerson, socketRef }) => {
         })
         setMessageInput('');
         handleLatestSelfMessage(data.message.message, data.message.createdAt)
+        setUserList(prev => {
+            const filtered = prev.filter(user => user._id !== chatPerson._id)
+            return [chatPerson, ...filtered]
+        })
     };
 
     // Close emoji picker on outside click
