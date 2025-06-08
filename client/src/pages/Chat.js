@@ -14,7 +14,7 @@ const Chat = () => {
     const [userList, setUserList] = useState([]);
     const [onlineUsers, setOnlineUsers] = useState([])
     const [currentUser, setCurrentUser] = useState(undefined);
-    const [latestMessage, setLatestMessage] = useState({})
+    const [latestMessage, setLatestMessage] = useState("")
     console.log(latestMessage)
 
     // checks if all stats were loaded

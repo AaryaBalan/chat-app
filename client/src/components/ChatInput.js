@@ -40,14 +40,11 @@ const ChatInput = ({ setLatestMessage, setUserList, handleLatestSelfMessage, cha
         // update the latest self message with time to render it in message area
         handleLatestSelfMessage(data.message.message, data.message.createdAt)
         // update the latest message to render it in contacts components
-        setLatestMessage(prev => ({
-            ...prev,
-            [currentUser._id]: {
-                sender: currentUser,
-                reciever: chatPerson,
-                message: data.message.message
-            }
-        }))
+        setLatestMessage({
+            sender: currentUser,
+            reciever: chatPerson,
+            message: data.message.message
+        })
         // update the recent user with the atmost top
         setUserList(prev => {
             const filtered = prev.filter(user => user._id !== chatPerson._id)
