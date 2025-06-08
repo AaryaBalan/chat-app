@@ -47,8 +47,49 @@ const Chat = () => {
                 console.error("Error fetching users:", error);
             }
         };
-        getAllUsersExceptMe();
+
+        const getRecentContacts = async () => {
+            try {
+                const users = await axios.post('http://localhost:5000/users/recent', {
+                    userId: user?._id
+                })
+                console.log(users)
+                setUserList(users.data)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        // getAllUsersExceptMe();
+        // getRecentContacts()
     }, []);
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const fetchUser = async () => {
+            try {
+                const users = await axios.post('http://localhost:5000/users/recent', {
+                    userId: user?._id
+                })
+                console.log(users)
+                setUserList(users.data)
+                const recentUsers = users.data
+                const recentUsersId = recentUsers?.map(u => u._id)
+                console.log(recentUsersId)
+                const { data } = await axios.get(`http://localhost:5000/users/all/${user._id}`);
+                if (data.status === false) {
+                    console.error(data.message);
+                    return
+                }
+                const allUsers = data.users
+                const otherUsers = allUsers.filter(user => !recentUsersId.includes(user._id))
+
+                setUserList([...recentUsers, ...otherUsers])
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchUser()
+    }, [])
 
     useEffect(() => {
         if (currentUser && currentUser._id) {
