@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ChatInput from './ChatInput'
 import ChatMessage from './ChatMessage'
 
 const ChatArea = ({ chatPerson, socketRef }) => {
-    // console.log(chatPerson)
     const [latestSelfMessage, setLatestSelfMessage] = useState({})
     const handleLatestSelfMessage = (message, time) => {
         setLatestSelfMessage({ message, time })

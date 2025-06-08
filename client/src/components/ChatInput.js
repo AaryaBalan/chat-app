@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { LuSticker, LuSendHorizontal } from 'react-icons/lu';
 import EmojiPicker from 'emoji-picker-react';
 import axios from 'axios';
+import notification from '../assets/notification.mp3'
 
 const ChatInput = ({ handleLatestSelfMessage, chatPerson, socketRef }) => {
     const [messageInput, setMessageInput] = useState('');
@@ -13,6 +14,10 @@ const ChatInput = ({ handleLatestSelfMessage, chatPerson, socketRef }) => {
     const handleSendMessage = async (e) => {
         e.preventDefault();
         if (!messageInput.trim()) return;
+
+        const audio = new Audio(notification);
+        audio.play();
+
         console.log(socketRef.current?.connected)
         const currentUser = JSON.parse(localStorage.getItem('user'))
 
@@ -57,6 +62,16 @@ const ChatInput = ({ handleLatestSelfMessage, chatPerson, socketRef }) => {
         }
     }, [messageInput]);
 
+    const handleTyping = (e) => {
+        if (e.key === 'Enter') {
+            handleSendMessage(e)
+        }
+        socketRef.current.emit('typing', {
+            typingUser: JSON.parse(localStorage.getItem('user'))._id,
+            waitingUser: chatPerson._id,
+        })
+    }
+
     return (
         <div className="relative p-4 shadow-md bg-[#0a0a13] border-b-2 border-x-2 border-[#673ab7] rounded-b-2xl">
             {/* Emoji Picker */}
@@ -96,10 +111,11 @@ const ChatInput = ({ handleLatestSelfMessage, chatPerson, socketRef }) => {
                     autoComplete="off"
                     rows={1}
                     ref={textareaRef}
+                    onKeyUp={(e) => handleTyping(e)}
                 />
                 <button
                     type="submit"
-                    className={`p-1 rounded-md text-white ${messageInput.trim()
+                    className={`p-1 rounded-md text-white outline-none ${messageInput.trim()
                         ? "bg-[#34a853] cursor-pointer"
                         : "bg-[#ea4335] cursor-not-allowed"
                         }`}

@@ -4,6 +4,7 @@ import moment from 'moment'
 
 const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
     const [messages, setMessages] = useState([]);
+    const [typingUserId, setTypingUserId] = useState(null)
     const scroll = useRef();
 
     // get all message related to the current person and chat person
@@ -31,14 +32,35 @@ const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
 
     // listening for chat person messages
     useEffect(() => {
+        const socket = socketRef.current
         const handleReceive = (data) => {
             setMessages(prev => [...prev, { self: false, message: data, time: new Date() }]);
         };
-        socketRef.current.on('recieveMessage', handleReceive);
+        socket.on('recieveMessage', handleReceive);
         return () => {
-            socketRef.current.off('recieveMessage', handleReceive);
+            socket.off('recieveMessage', handleReceive);
         };
-    }, []);
+    }, [socketRef]);
+
+    //listening typing
+    useEffect(() => {
+        const socket = socketRef.current
+        const handleTyping = ({ typingUser, waitingUser }) => {
+            const currentUserId = JSON.parse(localStorage.getItem("user"))._id;
+            if (waitingUser === currentUserId && typingUser === chatPerson._id) {
+                setTypingUserId(typingUser);
+                // Auto-hide typing after 2s
+                setTimeout(() => {
+                    setTypingUserId(null);
+                }, 3000);
+            }
+        };
+        socket.on('typing', handleTyping);
+        return () => {
+            socket.off('typing', handleTyping);
+        };
+    }, [socketRef, chatPerson]);
+
 
     // scroll down function
     useEffect(() => {
@@ -71,6 +93,18 @@ const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
                         </div>
                     );
                 })}
+                {
+                    typingUserId === chatPerson._id &&
+                    <div className='flex items-end gap-x-2 transition-all delay-3000'>
+                        <div
+                            className="w-10 h-10"
+                            dangerouslySetInnerHTML={{ __html: chatPerson.profileImage }}
+                        />
+                        <div className='max-w-md text-white font-medium w-fit px-3 py-2 bg-[#673ab7] rounded-t-2xl rounded-r-2xl'>
+                            <span className='dotSpan'>.</span><span className='dotSpan'>.</span><span className='dotSpan'>.</span>
+                        </div>
+                    </div>
+                }
                 <div ref={scroll}></div>
             </div>
         </div>

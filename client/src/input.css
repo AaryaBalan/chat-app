@@ -18,3 +18,35 @@ body {
 ::-webkit-scrollbar-thumb {
     background: #673ab7;
 }
+
+.dotSpan {
+    animation: bounce 0.6s infinite ease-in-out;
+    display: inline-block;
+    font-weight: bolder;
+}
+
+/* Add delay to each dot */
+.dotSpan:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dotSpan:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.dotSpan:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+        /* move up */
+    }
+}
