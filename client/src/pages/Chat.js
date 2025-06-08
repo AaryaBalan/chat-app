@@ -25,8 +25,8 @@ const Chat = () => {
     }, [navigate]);
 
     useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
         const getAllUsersExceptMe = async () => {
-            const user = JSON.parse(localStorage.getItem('user'));
             try {
                 const { data } = await axios.get(`http://localhost:5000/users/all/${user._id}`);
                 if (data.status === false) {
@@ -49,9 +49,6 @@ const Chat = () => {
             socketRef.current.on('online', users => setOnlineUsers(users))
         }
     }, [currentUser])
-
-    useEffect(() => {
-    }, [])
 
     function handleChatPerson(person) {
         setChatPerson(person);
@@ -76,6 +73,7 @@ const Chat = () => {
                             handleChatPerson={handleChatPerson}
                             chatPerson={chatPerson}
                             onlineUsers={onlineUsers}
+                            socketRef={socketRef}
                         />
                     </div>
                 )}

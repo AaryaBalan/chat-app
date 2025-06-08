@@ -34,7 +34,8 @@ const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
     useEffect(() => {
         const socket = socketRef.current
         const handleReceive = (data) => {
-            setMessages(prev => [...prev, { self: false, message: data, time: new Date() }]);
+            console.log(data)
+            setMessages(prev => [...prev, { self: false, message: data.message, time: new Date() }]);
         };
         socket.on('recieveMessage', handleReceive);
         return () => {

@@ -11,12 +11,16 @@ const socketControllers = (io) => {
             global.onlineUsers.add(userId)
         })
 
-        socket.on('sendMessage', data => {
+        socket.on('sendMessage', async (data) => {
             if (!data?.reciever || !data?.message) return;
 
             const socketIdOfReciever = global.usersIdMapSocketId.get(data.reciever)
-            if (socketIdOfReciever) {
-                socket.to(socketIdOfReciever).emit('recieveMessage', data.message)
+            const socketIdOfSender = global.usersIdMapSocketId.get(data.sender)
+
+            if (socketIdOfReciever && socketIdOfSender) {
+                socket.to(socketIdOfReciever).emit('recieveMessage', {
+                    message: data.message,
+                })
             }
         })
 

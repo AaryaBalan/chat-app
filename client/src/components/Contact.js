@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const Contact = ({ userList, currentUser, handleChatPerson, chatPerson, onlineUsers }) => {
-
+const Contact = ({ socketRef, userList, currentUser, handleChatPerson, chatPerson, onlineUsers }) => {
+    console.log(chatPerson, socketRef)
     function handleChatChange(user) {
         handleChatPerson(user)
     }
+    const [typingUserId, setTypingUserId] = useState(undefined)
+
+    useEffect(() => {
+        if (!socketRef.current) return;
+        const socket = socketRef.current;
+        const handleTyping = ({ typingUser, waitingUser }) => {
+            setTypingUserId(typingUser);
+            setTimeout(() => {
+                setTypingUserId(null);
+            }, 3000);
+        };
+        socket.on('typing', handleTyping);
+        return () => {
+            socket.off('typing', handleTyping);
+        };
+    }, [socketRef?.current]);
+
+
 
     return (
         <div className="flex flex-col gap-y-5 h-full w-full">
@@ -23,7 +41,15 @@ const Contact = ({ userList, currentUser, handleChatPerson, chatPerson, onlineUs
                             />
                             <div className={`absolute -right-1 bottom-0.5 rounded-full  ${onlineUsers.includes(user._id) ? "w-4 h-4 bg-[#1cd14f]" : ""}`}></div>
                         </div>
-                        <h2 className="text-base md:text-lg font-semibold truncate text-inherit">{user.username}</h2>
+                        <div className='truncate'>
+                            <h2 className="text-base md:text-lg font-semibold truncate text-inherit">{user.username}</h2>
+                            {/* <div className='text-[#1cd14f]'>{typingUserId === user._id && "Typing..."}</div> */}
+                            {typingUserId === user._id &&
+                                <div className='text-[#1cd14f] flex gap-x-2'>
+                                    <span className='dotSpan'>a</span><span className='dotSpan'>b</span><span className='dotSpan'>c</span>
+                                </div>
+                            }
+                        </div>
                     </div>
                 ))}
             </div>
