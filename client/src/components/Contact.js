@@ -72,11 +72,11 @@ const Contact = ({ latestMessage, setLatestMessage, socketRef, setUserList, user
                                     <div className='text-[#1cd14f] flex gap-x-2'>
                                         <span className='dotSpan'>a</span><span className='dotSpan'>b</span><span className='dotSpan'>c</span>
                                     </div> :
-                                    <div>{user?.lastMessage}</div>
+                                    <div className='truncate'>{user?.lastMessage}</div>
                                 }
                             </div>
                         </div>
-                        <div className={`bg-[#1cd14f] w-6 h-6 rounded-full flex items-center justify-center text-black ${user._id in unreadMessage ? 'block' : 'hidden'}`}>{unreadMessage[user._id]}</div>
+                        <div className={`bg-[#1cd14f] w-6 h-6 rounded-full flex items-center justify-center text-black shrink-0 ${user._id in unreadMessage ? 'block' : 'hidden'}`}>{unreadMessage[user._id] < 10 ? unreadMessage[user._id] : '9+'}</div>
                     </div>
                 ))}
             </div>

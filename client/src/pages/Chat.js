@@ -115,6 +115,7 @@ const Chat = () => {
                             setChatPerson={setChatPerson}
                             socketRef={socketRef}
                             setLatestMessage={setLatestMessage}
+                            onlineUsers={onlineUsers}
                         />
                     </div>
                 }

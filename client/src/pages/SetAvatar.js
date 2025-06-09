@@ -3,6 +3,7 @@ import multiavatar from '@multiavatar/multiavatar';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { TfiReload } from "react-icons/tfi";
 
 const SetAvatar = () => {
     const Navigate = useNavigate();
@@ -93,12 +94,20 @@ const SetAvatar = () => {
                             ))
                         }
                     </div>
-                    <button
-                        onClick={setProfileImage}
-                        className='bg-[#fbbc05] text-black font-bold py-2 rounded-lg w-fit px-4 self-end hover:bg-[#34a853] transition duration-300 cursor-pointer'
-                    >
-                        Next
-                    </button>
+                    <div className='flex justify-between'>
+                        <button
+                            onClick={() => window.location.reload()}
+                            className='bg-[#673ab7] text-white font-bold py-2 rounded-lg w-fit px-4 hover:bg-[#ea4335] transition duration-300 cursor-pointer flex items-center gap-x-2'
+                        >
+                            <TfiReload size={20} /> <span>Load more avatar...</span>
+                        </button>
+                        <button
+                            onClick={setProfileImage}
+                            className='bg-[#fbbc05] text-black font-bold py-2 rounded-lg w-fit px-4 hover:bg-[#34a853] transition duration-300 cursor-pointer'
+                        >
+                            Next
+                        </button>
+                    </div>
                 </div>
             </div>
             <ToastContainer />
