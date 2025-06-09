@@ -9,7 +9,7 @@ import Navbar from '../components/Navbar';
 
 const Chat = () => {
     const navigate = useNavigate();
-    
+
     // userlist => contacts
     //online users => contacts
     const [userList, setUserList] = useState([]);
@@ -23,7 +23,9 @@ const Chat = () => {
     // chat person => goes to all chat components
     //socket ref => goes to all chat components
     const [chatPerson, setChatPerson] = useState(undefined);
+    const [showUserInfo, setShowUserInfo] = useState(false)
     const socketRef = useRef()
+    console.log(userList)
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -70,6 +72,7 @@ const Chat = () => {
     }, [currentUser])
 
     function handleChatPerson(person) {
+        console.log(123, person)
         setChatPerson(person);
     }
 
@@ -88,6 +91,7 @@ const Chat = () => {
                         `}
                     >
                         <Contact
+                            setShowUserInfo={setShowUserInfo}
                             setUserList={setUserList}
                             userList={userList}
                             currentUser={currentUser}
@@ -112,6 +116,8 @@ const Chat = () => {
                     `}
                     >
                         <ChatArea
+                            showUserInfo={showUserInfo}
+                            setShowUserInfo={setShowUserInfo}
                             setUserList={setUserList}
                             chatPerson={chatPerson}
                             setChatPerson={setChatPerson}

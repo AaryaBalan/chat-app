@@ -100,6 +100,12 @@ module.exports.recentUsers = async (userID) => {
                 isProfileImageSet: "$user.isProfileImageSet",
                 profileImage: "$user.profileImage",
                 active: "$user.active",
+                firstName: "$user.firstName",
+                lastName: "$user.lastName",
+                bio: "$user.bio",
+                dob: "$user.dob",
+                github: "$user.github",
+                linkedin: "$user.linkedin",
                 lastMessage: 1,
                 lastDate: 1
             }

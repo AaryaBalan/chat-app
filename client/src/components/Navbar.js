@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaHome, FaCompass, FaUsers, FaUserCircle, FaCog, FaBars } from "react-icons/fa";
+import { FaHome, FaCompass, FaUsers, FaUserCircle, FaCog, FaBars, FaPowerOff } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 
@@ -34,6 +34,12 @@ const Navbar = () => {
         { label: "Settings", icon: <FaCog />, link: "/settings" },
     ];
 
+    // logout function
+    const logout = () => {
+        localStorage.clear()
+        window.location.href = '/login'
+    }
+
     return (
         <div className="relative">
             {/* Toggle Button */}
@@ -65,6 +71,10 @@ const Navbar = () => {
                             <span className="">{item.label}</span>
                         </Link>
                     ))}
+                    <div className='flex items-center gap-3 w-full text-left px-3 py-2 mb-2 rounded-md hover:bg-[#333144] transition-colors cursor-pointer' onClick={logout}>
+                        <span className="text-lg"><FaPowerOff /></span>
+                        <span className="">Logout</span>
+                    </div>
                 </div>
             </div>
         </div>
