@@ -5,6 +5,7 @@ import Contact from '../components/Contact';
 import ChatArea from '../components/ChatArea';
 import DefaultChat from '../components/DefaultChat';
 import { io } from 'socket.io-client'
+import Navbar from '../components/Navbar';
 
 const Chat = () => {
     const navigate = useNavigate();
@@ -74,6 +75,7 @@ const Chat = () => {
 
     return (
         <div className="bg-[#131324] min-h-screen w-full flex justify-center items-center px-2 py-4 md:px-6 md:py-10">
+            <Navbar />
             <div className="flex flex-col md:flex-row gap-y-4 md:gap-x-6 bg-[#00000076] w-full max-w-7xl rounded-lg p-4 md:p-8 h-[90vh] overflow-hidden">
 
                 {/* CONTACTS */}

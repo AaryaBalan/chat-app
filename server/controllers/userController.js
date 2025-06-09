@@ -93,7 +93,7 @@ module.exports.recentUsers = async (userID) => {
             $unwind: "$user"
         },
         {
-            $project:{
+            $project: {
                 _id: "$user._id",
                 username: "$user.username",
                 email: "$user.email",
@@ -120,3 +120,41 @@ module.exports.getRecentUsers = async (req, res, next) => {
         console.log(err)
     }
 }
+
+module.exports.updateUserById = async (userId, data) => {
+    try {
+        // Spread data directly to update fields at root level
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            data,
+            { new: true, runValidators: true }
+        );
+        return updatedUser;
+    } catch (err) {
+        // You can log or throw here based on preference
+        throw err;
+    }
+};
+
+// Update route handler
+module.exports.updateUserByIdRoute = async (req, res, next) => {
+    try {
+        const userId = req.params.userId;
+
+        // Adjust to match frontend: the entire user data is sent in req.body
+        const userData = req.body;
+
+        // Validate userData if needed before update
+
+        const updatedUser = await module.exports.updateUserById(userId, userData);
+
+        if (updatedUser) {
+            res.json({ status: true, updatedUser });
+        } else {
+            res.json({ status: false, message: 'No User found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: false, message: 'Internal server error' });
+    }
+};

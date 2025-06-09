@@ -10,27 +10,24 @@ const SetAvatar = () => {
     const [avatarLists, setavatarLists] = useState([]);
     const [selectedAvatarIndex, setSelectedAvatarIndex] = useState(null);
 
-    //
+    // create 8 random avatars
+    function createRandomAvatars() {
+        const avatars = [];
+        for (let i = 0; i < 10; i++) {
+            const randomAvatar = multiavatar(`${Math.random()}`);
+            avatars.push(randomAvatar);
+        }
+        setavatarLists(avatars);
+        return avatars;
+    }
+
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user.isProfileImageSet) {
             Navigate('/');
         }
-    }, [Navigate])
-
-    useEffect(() => {
-        // create 8 random avatars
-        function createRandomAvatars() {
-            const avatars = [];
-            for (let i = 0; i < 10; i++) {
-                const randomAvatar = multiavatar(`${Math.random()}`);
-                avatars.push(randomAvatar);
-            }
-            setavatarLists(avatars);
-            return avatars;
-        }
         createRandomAvatars();
-    }, [])
+    }, [Navigate])
 
     function selectAvatar(index) {
         setSelectedAvatarIndex(index);
@@ -64,7 +61,7 @@ const SetAvatar = () => {
                     user.profileImage = avatarLists[selectedAvatarIndex];
                     localStorage.setItem('user', JSON.stringify(user));
                     toast.success(data.message, toastOptions);
-                    window.location.href = '/';
+                    window.location.href = '/settings';
                 }
             } catch (error) {
                 toast.error("Error setting profile image", toastOptions);
@@ -96,7 +93,7 @@ const SetAvatar = () => {
                     </div>
                     <div className='flex justify-between'>
                         <button
-                            onClick={() => window.location.reload()}
+                            onClick={createRandomAvatars}
                             className='bg-[#673ab7] text-white font-bold py-2 rounded-lg w-fit px-4 hover:bg-[#ea4335] transition duration-300 cursor-pointer flex items-center gap-x-2'
                         >
                             <TfiReload size={20} /> <span>Load more avatar...</span>

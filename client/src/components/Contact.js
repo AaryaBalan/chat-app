@@ -72,7 +72,7 @@ const Contact = ({ latestMessage, setLatestMessage, socketRef, setUserList, user
                                     <div className='text-[#1cd14f] flex gap-x-2'>
                                         <span className='dotSpan'>a</span><span className='dotSpan'>b</span><span className='dotSpan'>c</span>
                                     </div> :
-                                    <div className='truncate'>{user?.lastMessage}</div>
+                                    <div className='truncate text-sm'>{user?.lastMessage}</div>
                                 }
                             </div>
                         </div>
