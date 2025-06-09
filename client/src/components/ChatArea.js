@@ -17,7 +17,7 @@ const ChatArea = ({ setLatestMessage, setUserList, chatPerson, socketRef }) => {
                     />
                     <h2 className="text-white text-base md:text-lg font-semibold truncate uppercase">{chatPerson?.username}</h2>
                 </div>
-                <div className='h-full bg-[#202123] flex flex-col overflow-auto rounded-b-2xl'>
+                <div className='h-full bg-[#131324] flex flex-col overflow-auto rounded-b-2xl'>
                     <ChatMessage chatPerson={chatPerson} socketRef={socketRef} latestSelfMessage={latestSelfMessage} />
                     <ChatInput setLatestMessage={setLatestMessage} setUserList={setUserList} chatPerson={chatPerson} socketRef={socketRef} handleLatestSelfMessage={handleLatestSelfMessage} />
                 </div>

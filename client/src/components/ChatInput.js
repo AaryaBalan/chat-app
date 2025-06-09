@@ -110,7 +110,7 @@ const ChatInput = ({ setLatestMessage, setUserList, handleLatestSelfMessage, cha
                 <button
                     ref={emojiButtonRef}
                     type="button"
-                    className="p-1 bg-[#fbbc05] text-gray-800 border rounded-md cursor-pointer"
+                    className="text-[#fbbc05] cursor-pointer"
                     title="Emoji"
                     onClick={() => setIsEmojiDisplay(prev => !prev)}
                 >
@@ -130,9 +130,9 @@ const ChatInput = ({ setLatestMessage, setUserList, handleLatestSelfMessage, cha
                 />
                 <button
                     type="submit"
-                    className={`p-1 rounded-md text-white outline-none ${messageInput.trim()
-                        ? "bg-[#34a853] cursor-pointer"
-                        : "bg-[#ea4335] cursor-not-allowed"
+                    className={`focus:bg-[#34a853] focus:text-white p-1 rounded-md outline-none ${messageInput.trim()
+                        ? "text-[#34a853] cursor-pointer"
+                        : "text-[#ea4335] cursor-not-allowed"
                         }`}
                     disabled={!messageInput.trim()}
                     title="Send Message"

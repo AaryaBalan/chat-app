@@ -50,12 +50,12 @@ const Contact = ({ latestMessage, setLatestMessage, socketRef, setUserList, user
     return (
         <div className="flex flex-col gap-y-5 h-full w-full">
             {/* Scrollable Contact List */}
-            <div className="flex flex-col gap-y-4 overflow-y-auto h-[100vh] md:h-[100vh] pr-2 text-white">
+            <div className="flex flex-col gap-y-2 overflow-y-auto h-[100vh] md:h-[100vh] pr-2 text-white">
                 {userList.map((user, index) => (
                     <div
                         onClick={() => handleChatChange(user)}
                         key={index}
-                        className={`cursor-pointer bg-[#202123] p-4 rounded-lg flex items-center gap-4 w-full hover:bg-[#ea4335] hover:text- transition justify-between ${chatPerson?._id === user?._id ? "bg-[#ea4335] text-" : ""}`}
+                        className={`cursor-pointer bg-[#131324] p-4 rounded-lg flex items-center gap-4 w-full border-1 hover:border-1 hover:border-[#ea4335] hover:bg-[#ea44354d] transition justify-between ${chatPerson?._id === user?._id ? "bg-[#ea44354d] border-[#ea4335]" : "border-black"}`}
                     >
                         <div className='flex items-center gap-4 truncate'>
                             <div className='relative'>
@@ -82,12 +82,12 @@ const Contact = ({ latestMessage, setLatestMessage, socketRef, setUserList, user
             </div>
 
             {/* Current User Display */}
-            <div className="mt-4 bg-[#fbbc05] p-4 rounded-lg flex items-center gap-4 w-full shrink-0">
+            <div className="mt-4 bg-[#fbbd0563] border-1 border-[#fbbc05] p-4 rounded-lg flex items-center gap-4 w-full shrink-0">
                 <div
                     className="w-12 h-12 md:w-16 md:h-16"
                     dangerouslySetInnerHTML={{ __html: currentUser?.profileImage }}
                 />
-                <h2 className="text-black text-base md:text-lg font-semibold truncate">{currentUser?.username}</h2>
+                <h2 className="text-white text-base md:text-lg font-semibold truncate">{currentUser?.username}</h2>
             </div>
         </div >
     );

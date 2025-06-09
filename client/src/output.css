@@ -224,6 +224,12 @@
   .mt-6 {
     margin-top: calc(var(--spacing) * 6);
   }
+  .mt-7 {
+    margin-top: calc(var(--spacing) * 7);
+  }
+  .mt-10 {
+    margin-top: calc(var(--spacing) * 10);
+  }
   .block {
     display: block;
   }
@@ -259,6 +265,9 @@
   }
   .h-24 {
     height: calc(var(--spacing) * 24);
+  }
+  .h-96 {
+    height: calc(var(--spacing) * 96);
   }
   .h-\[90\%\] {
     height: 90%;
@@ -301,6 +310,27 @@
   }
   .w-24 {
     width: calc(var(--spacing) * 24);
+  }
+  .w-40 {
+    width: calc(var(--spacing) * 40);
+  }
+  .w-96 {
+    width: calc(var(--spacing) * 96);
+  }
+  .w-\[80\%\] {
+    width: 80%;
+  }
+  .w-\[80\] {
+    width: 80;
+  }
+  .w-\[90\%\] {
+    width: 90%;
+  }
+  .w-\[300px\] {
+    width: 300px;
+  }
+  .w-\[500px\] {
+    width: 500px;
   }
   .w-fit {
     width: fit-content;
@@ -383,6 +413,9 @@
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
+  .gap-5 {
+    gap: calc(var(--spacing) * 5);
+  }
   .gap-x-2 {
     column-gap: calc(var(--spacing) * 2);
   }
@@ -394,6 +427,12 @@
   }
   .gap-x-8 {
     column-gap: calc(var(--spacing) * 8);
+  }
+  .gap-y-1 {
+    row-gap: calc(var(--spacing) * 1);
+  }
+  .gap-y-1\.5 {
+    row-gap: calc(var(--spacing) * 1.5);
   }
   .gap-y-2 {
     row-gap: calc(var(--spacing) * 2);
@@ -433,6 +472,12 @@
   .overflow-y-auto {
     overflow-y: auto;
   }
+  .rounded {
+    border-radius: 0.25rem;
+  }
+  .rounded-2xl {
+    border-radius: var(--radius-2xl);
+  }
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
@@ -462,6 +507,14 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-1 {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+  }
   .border-5 {
     border-style: var(--tw-border-style);
     border-width: 5px;
@@ -474,11 +527,35 @@
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 2px;
   }
+  .border-\[\#34a853\] {
+    border-color: #34a853;
+  }
   .border-\[\#673ab7\] {
     border-color: #673ab7;
   }
+  .border-\[\#ea4335\] {
+    border-color: #ea4335;
+  }
+  .border-\[\#fbbc05\] {
+    border-color: #fbbc05;
+  }
+  .border-\[red\] {
+    border-color: red;
+  }
+  .border-black {
+    border-color: var(--color-black);
+  }
   .bg-\[\#0a0a13\] {
     background-color: #0a0a13;
+  }
+  .bg-\[\#0b141a\] {
+    background-color: #0b141a;
+  }
+  .bg-\[\#000000\] {
+    background-color: #000000;
+  }
+  .bg-\[\#1b1c1d\] {
+    background-color: #1b1c1d;
   }
   .bg-\[\#1cd14f\] {
     background-color: #1cd14f;
@@ -486,14 +563,38 @@
   .bg-\[\#34a853\] {
     background-color: #34a853;
   }
+  .bg-\[\#34a8532d\] {
+    background-color: #34a8532d;
+  }
+  .bg-\[\#34a8533f\] {
+    background-color: #34a8533f;
+  }
+  .bg-\[\#34a8535b\] {
+    background-color: #34a8535b;
+  }
+  .bg-\[\#34a85350\] {
+    background-color: #34a85350;
+  }
+  .bg-\[\#34a85354\] {
+    background-color: #34a85354;
+  }
   .bg-\[\#00000076\] {
     background-color: #00000076;
   }
   .bg-\[\#673ab7\] {
     background-color: #673ab7;
   }
+  .bg-\[\#683ab750\] {
+    background-color: #683ab750;
+  }
+  .bg-\[\#683ab765\] {
+    background-color: #683ab765;
+  }
   .bg-\[\#131324\] {
     background-color: #131324;
+  }
+  .bg-\[\#141425\] {
+    background-color: #141425;
   }
   .bg-\[\#202123\] {
     background-color: #202123;
@@ -501,8 +602,29 @@
   .bg-\[\#ea4335\] {
     background-color: #ea4335;
   }
+  .bg-\[\#ea44354d\] {
+    background-color: #ea44354d;
+  }
+  .bg-\[\#ea44356b\] {
+    background-color: #ea44356b;
+  }
   .bg-\[\#fbbc05\] {
     background-color: #fbbc05;
+  }
+  .bg-\[\#fbbd0549\] {
+    background-color: #fbbd0549;
+  }
+  .bg-\[\#fbbd0563\] {
+    background-color: #fbbd0563;
+  }
+  .bg-\[\#fbbd0573\] {
+    background-color: #fbbd0573;
+  }
+  .bg-\[hsl\(240\,31\%\,11\%\)\] {
+    background-color: hsl(240,31%,11%);
+  }
+  .bg-\[rgb\(19\,19\,36\)\] {
+    background-color: rgb(19,19,36);
   }
   .bg-transparent {
     background-color: transparent;
@@ -534,6 +656,9 @@
   .px-5 {
     padding-inline: calc(var(--spacing) * 5);
   }
+  .py-1 {
+    padding-block: calc(var(--spacing) * 1);
+  }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
@@ -552,6 +677,10 @@
   .text-center {
     text-align: center;
   }
+  .text-2xl {
+    font-size: var(--text-2xl);
+    line-height: var(--tw-leading, var(--text-2xl--line-height));
+  }
   .text-3xl {
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
@@ -563,6 +692,10 @@
   .text-base {
     font-size: var(--text-base);
     line-height: var(--tw-leading, var(--text-base--line-height));
+  }
+  .text-xl {
+    font-size: var(--text-xl);
+    line-height: var(--tw-leading, var(--text-xl--line-height));
   }
   .text-xs {
     font-size: var(--text-xs);
@@ -586,6 +719,9 @@
   }
   .text-\[\#1cd14f\] {
     color: #1cd14f;
+  }
+  .text-\[\#34a853\] {
+    color: #34a853;
   }
   .text-\[\#ea4335\] {
     color: #ea4335;
@@ -660,6 +796,37 @@
       }
     }
   }
+  .hover\:border {
+    &:hover {
+      @media (hover: hover) {
+        border-style: var(--tw-border-style);
+        border-width: 1px;
+      }
+    }
+  }
+  .hover\:border-1 {
+    &:hover {
+      @media (hover: hover) {
+        border-style: var(--tw-border-style);
+        border-width: 1px;
+      }
+    }
+  }
+  .hover\:border-2 {
+    &:hover {
+      @media (hover: hover) {
+        border-style: var(--tw-border-style);
+        border-width: 2px;
+      }
+    }
+  }
+  .hover\:border-\[\#ea4335\] {
+    &:hover {
+      @media (hover: hover) {
+        border-color: #ea4335;
+      }
+    }
+  }
   .hover\:bg-\[\#34a853\] {
     &:hover {
       @media (hover: hover) {
@@ -671,6 +838,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: #ea4335;
+      }
+    }
+  }
+  .hover\:bg-\[\#ea44354d\] {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #ea44354d;
       }
     }
   }
@@ -691,6 +865,21 @@
   .focus\:border-\[\#34a853\] {
     &:focus {
       border-color: #34a853;
+    }
+  }
+  .focus\:bg-\[\#34a853\] {
+    &:focus {
+      background-color: #34a853;
+    }
+  }
+  .focus\:bg-\[34a853\] {
+    &:focus {
+      background-color: 34a853;
+    }
+  }
+  .focus\:text-white {
+    &:focus {
+      color: var(--color-white);
     }
   }
   .md\:block {

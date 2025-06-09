@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import moment from 'moment'
+import DefaultChat from './DefaultChat';
 
 const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
     const [messages, setMessages] = useState([]);
@@ -85,8 +86,8 @@ const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
                             />
                             <div
                                 className={`max-w-md text-white font-medium w-fit px-3 py-2 ${isSelf
-                                    ? 'bg-[#34a853] rounded-t-2xl rounded-l-2xl'
-                                    : 'bg-[#673ab7] rounded-t-2xl rounded-r-2xl'
+                                    ? 'border border-[#34a853] bg-[#34a85354] rounded-t-2xl rounded-l-2xl'
+                                    : 'border border-[#673ab7] bg-[#683ab765] rounded-t-2xl rounded-r-2xl'
                                     } flex flex-col gap-y-2`}
                             >
                                 {msg.message} <br />
@@ -106,6 +107,9 @@ const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
                             <span className='dotSpan'>.</span><span className='dotSpan'>.</span><span className='dotSpan'>.</span>
                         </div>
                     </div>
+                }
+                {
+                    messages?.length == 0 ? <DefaultChat /> : ''
                 }
                 <div ref={scroll}></div>
             </div>
