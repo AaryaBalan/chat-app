@@ -77,7 +77,8 @@ const ChatInput = ({ setLatestMessage, setUserList, handleLatestSelfMessage, cha
     }, [messageInput]);
 
     const handleTyping = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault()
             handleSendMessage(e)
         }
         socketRef.current.emit('typing', {

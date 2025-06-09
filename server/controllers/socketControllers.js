@@ -37,9 +37,7 @@ const socketControllers = (io) => {
         })
 
         socket.on('typing', users => {
-            console.log(users, global.usersIdMapSocketId)
             const socketIfOfWaitingUser = global.usersIdMapSocketId.get(users.waitingUser)
-            console.log(socketIfOfWaitingUser)
             if (socketIfOfWaitingUser) {
                 socket.to(socketIfOfWaitingUser).emit('typing', users)
             }

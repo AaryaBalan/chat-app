@@ -15,7 +15,6 @@ const Chat = () => {
     const [onlineUsers, setOnlineUsers] = useState([])
     const [currentUser, setCurrentUser] = useState(undefined);
     const [latestMessage, setLatestMessage] = useState("")
-    console.log(latestMessage)
 
     // checks if all stats were loaded
     const [isLoaded, setIsLoaded] = useState(false);
@@ -40,11 +39,9 @@ const Chat = () => {
                 const users = await axios.post('http://localhost:5000/users/recent', {
                     userId: user?._id
                 })
-                console.log(users)
                 setUserList(users.data)
                 const recentUsers = users.data
                 const recentUsersId = recentUsers?.map(u => u._id)
-                console.log(recentUsersId)
                 const { data } = await axios.get(`http://localhost:5000/users/all/${user._id}`);
                 if (data.status === false) {
                     console.error(data.message);

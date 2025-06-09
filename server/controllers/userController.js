@@ -4,7 +4,6 @@ const Message = require('../models/messageModel')
 
 // get all user expect the logged in user
 module.exports.getAllUsersExpectMe = async (req, res, next) => {
-    console.log(global.onlineUsers)
     try {
         const userId = req.params.id;
         // Find all users except the one with the given userId
@@ -115,7 +114,6 @@ module.exports.recentUsers = async (userID) => {
 
 module.exports.getRecentUsers = async (req, res, next) => {
     try {
-        console.log(req.body.userId)
         const users = await module.exports.recentUsers(req.body.userId)
         res.json(users)
     } catch (err) {
