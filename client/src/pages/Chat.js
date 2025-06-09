@@ -35,36 +35,6 @@ const Chat = () => {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
-        const getAllUsersExceptMe = async () => {
-            try {
-                const { data } = await axios.get(`http://localhost:5000/users/all/${user._id}`);
-                if (data.status === false) {
-                    console.error(data.message);
-                } else {
-                    setUserList(data.users);
-                }
-            } catch (error) {
-                console.error("Error fetching users:", error);
-            }
-        };
-
-        const getRecentContacts = async () => {
-            try {
-                const users = await axios.post('http://localhost:5000/users/recent', {
-                    userId: user?._id
-                })
-                console.log(users)
-                setUserList(users.data)
-            } catch (err) {
-                console.log(err)
-            }
-        }
-        // getAllUsersExceptMe();
-        // getRecentContacts()
-    }, []);
-
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'));
         const fetchUser = async () => {
             try {
                 const users = await axios.post('http://localhost:5000/users/recent', {
@@ -89,7 +59,7 @@ const Chat = () => {
             }
         }
         fetchUser()
-    }, [])
+    }, [latestMessage])
 
     useEffect(() => {
         if (currentUser && currentUser._id) {

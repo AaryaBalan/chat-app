@@ -64,7 +64,6 @@ const Contact = ({ latestMessage, setLatestMessage, socketRef, setUserList, user
                                     <span className='dotSpan'>a</span><span className='dotSpan'>b</span><span className='dotSpan'>c</span>
                                 </div> :
                                 <div>{user?.lastMessage}</div>
-                                // <div className={`${(latestMessage && latestMessage.sender?._id === user._id) || (latestMessage && latestMessage.reciever?._id === user._id) ? "block" : "hidden"}`}>{latestMessage.message ? latestMessage.message : user.lastMessage}</div>
                             }
                         </div>
                     </div>
