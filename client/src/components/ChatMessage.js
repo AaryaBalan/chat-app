@@ -109,7 +109,7 @@ const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
                     </div>
                 }
                 {
-                    messages?.length == 0 ? <DefaultChat /> : ''
+                    messages?.length === 0 ? <DefaultChat /> : ''
                 }
                 <div ref={scroll}></div>
             </div>

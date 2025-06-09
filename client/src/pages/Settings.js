@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
+import { MdEdit } from "react-icons/md";
+import { Link } from 'react-router-dom';
+
 
 const Settings = () => {
     const [userDetails, setUserDetails] = useState({
@@ -58,15 +61,12 @@ const Settings = () => {
         setLoading(true);
 
         try {
-            // Send only userDetails as payload (not wrapped inside another object)
             const res = await axios.put(`http://localhost:5000/users/update/${user._id}`, userDetails);
 
             if (res.data.status === false) {
                 toast.error(res.data.message || 'Update failed!', toastOptions);
             } else {
                 toast.success('Profile updated!', toastOptions);
-
-                // Remove password or any sensitive info before storing
                 const updatedUser = { ...res.data.updatedUser };
                 delete updatedUser.password;
 
@@ -95,28 +95,20 @@ const Settings = () => {
                 <div className="bg-[#00000076] w-full max-w-5xl rounded-lg p-8">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                         <h2 className="text-white text-2xl font-bold text-center">Profile Settings</h2>
-
-                        {/* Two Column Row */}
                         <div className="flex flex-col lg:flex-row gap-8">
-                            {/* Left Column */}
                             <div className="flex-1 flex flex-col gap-4">
                                 <div className="flex items-center gap-x-4 self-center">
-                                    {/* Profile Image: use SVG or IMG */}
-                                    {userDetails.profileImage?.includes('<svg') ? (
+                                    <div className='relative'>
                                         <div
                                             className="w-24 h-24"
                                             dangerouslySetInnerHTML={{ __html: userDetails.profileImage }}
                                         />
-                                    ) : (
-                                        <img
-                                            src={userDetails.profileImage || '/default-profile.png'}
-                                            alt="profile"
-                                            className="w-24 h-24 object-cover rounded-full"
-                                        />
-                                    )}
+                                        <Link to={'/setAvatar'} className='absolute right-0 bottom-0 bg-[#34a853] w-7 h-7 flex items-center justify-center rounded-full cursor-pointer'><MdEdit size={20} color='white' /></Link>
+                                    </div>
                                     <div className="text-white font-extrabold text-2xl">{userDetails?.username}</div>
                                 </div>
                                 <input
+                                    required
                                     name="firstName"
                                     value={userDetails.firstName}
                                     onChange={handleChange}
@@ -125,6 +117,7 @@ const Settings = () => {
                                     className="bg-transparent border border-[#673ab7] text-white px-3 py-2 rounded-md focus:outline-none focus:border-[#34a853]"
                                 />
                                 <input
+                                    required
                                     name="lastName"
                                     value={userDetails.lastName}
                                     onChange={handleChange}
@@ -133,7 +126,9 @@ const Settings = () => {
                                     className="bg-transparent border border-[#673ab7] text-white px-3 py-2 rounded-md focus:outline-none focus:border-[#34a853]"
                                 />
                                 <input
+                                    required
                                     name="username"
+                                    maxLength={20}
                                     value={userDetails.username}
                                     onChange={handleChange}
                                     type="text"
@@ -142,9 +137,9 @@ const Settings = () => {
                                 />
                             </div>
 
-                            {/* Right Column */}
                             <div className="flex-1 flex flex-col gap-4">
                                 <textarea
+                                    required
                                     name="bio"
                                     value={userDetails.bio}
                                     onChange={handleChange}
@@ -169,6 +164,7 @@ const Settings = () => {
                                     className="bg-transparent border border-[#673ab7] text-white px-3 py-2 rounded-md focus:outline-none focus:border-[#34a853]"
                                 />
                                 <input
+                                    required
                                     name="dob"
                                     value={userDetails.dob}
                                     onChange={handleChange}

@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import SetAvatar from './pages/SetAvatar';
 import Chat from './pages/Chat';
 import Settings from './pages/Settings';
+import Explore from './pages/Explore';
 
 const App = () => {
   return (
@@ -15,7 +16,7 @@ const App = () => {
         <Route path='/setAvatar' element={<SetAvatar />} />
         <Route path='/settings' element={<Settings />} />
         <Route path='/' element={<Chat />} />
-
+        <Route path='/explore' element={<Explore />} />
       </Routes>
     </Router>
   )

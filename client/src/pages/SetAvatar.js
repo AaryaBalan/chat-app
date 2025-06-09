@@ -22,10 +22,6 @@ const SetAvatar = () => {
     }
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (user.isProfileImageSet) {
-            Navigate('/');
-        }
         createRandomAvatars();
     }, [Navigate])
 

@@ -9,7 +9,7 @@ import Navbar from '../components/Navbar';
 
 const Chat = () => {
     const navigate = useNavigate();
-
+    
     // userlist => contacts
     //online users => contacts
     const [userList, setUserList] = useState([]);
