@@ -4,7 +4,7 @@ import EmojiPicker from 'emoji-picker-react';
 import axios from 'axios';
 import notification from '../assets/notification.mp3'
 
-const ChatInput = ({ setLatestMessage, setUserList, handleLatestSelfMessage, chatPerson, socketRef }) => {
+const ChatInput = ({ setIsReply, isReply, replyMessage, setLatestMessage, setUserList, handleLatestSelfMessage, chatPerson, socketRef }) => {
     const [messageInput, setMessageInput] = useState('');
     const [isEmojiDisplay, setIsEmojiDisplay] = useState(false);
     const emojiPickerRef = useRef(null);
@@ -27,12 +27,17 @@ const ChatInput = ({ setLatestMessage, setUserList, handleLatestSelfMessage, cha
             reciever: chatPerson._id,
             message: messageInput
         })
-
+        let replyId = ""
         // uploading in db
+        if (isReply && replyMessage.message.length !== 0) {
+            replyId = replyMessage._id
+        }
+        console.log(replyMessage)
         const { data } = await axios.post('http://localhost:5000/message/add', {
             sender: currentUser._id,
             reciever: chatPerson._id,
-            message: messageInput
+            message: messageInput,
+            replyMessage: replyId
         })
 
         //empty the text area
@@ -104,6 +109,14 @@ const ChatInput = ({ setLatestMessage, setUserList, handleLatestSelfMessage, cha
                     />
                 </div>
             )}
+
+            {
+                isReply &&
+                <div className='flex justify-between mb-2 gap-x-3 items-center'>
+                    <div className='py-1 px-2  rounded-md ml-10 bg-[#ffffff21] text-white w-full'>{replyMessage.message}</div>
+                    <div className='bg-[#ea4335] px-3 p-0.5 rounded-md cursor-pointer' onClick={() => setIsReply(false)}>X</div>
+                </div>
+            }
 
             {/* Input Area */}
             <form onSubmit={handleSendMessage} className="flex items-center gap-2 max-w-5xl mx-auto">

@@ -2,11 +2,13 @@ const Message = require('../models/messageModel')
 
 module.exports.addMessage = async (req, res, next) => {
     try {
-        const { message, sender, reciever } = req.body
+        const { message, sender, reciever, replyMessage } = req.body
+        console.log('reply', replyMessage)
         const addedMessage = await Message.create({
             message,
             users: [sender, reciever],
-            sender
+            sender,
+            replyMessage
         })
         res.json({ status: true, message: addedMessage })
     } catch (err) {
@@ -21,12 +23,26 @@ module.exports.getAllMessage = async (req, res, next) => {
             users: {
                 $all: [sender, reciever],
             },
-        }).sort({ createdAt: 1 })
+        })
+            .populate({
+                path: 'replyMessage',
+                select: 'message sender createdAt',
+            })
+            .sort({ createdAt: 1 })
         const formatMessage = messages.map((msg) => {
             return {
                 self: msg.sender.toString() === sender,
                 message: msg.message,
-                time: msg.createdAt
+                time: msg.createdAt,
+                _id: msg._id,
+                replyMessage: msg.replyMessage
+                    ? {
+                        _id: msg.replyMessage._id,
+                        message: msg.replyMessage.message,
+                        sender: msg.replyMessage.sender,
+                        time: msg.replyMessage.createdAt
+                    }
+                    : null
             }
         })
         res.json(formatMessage)

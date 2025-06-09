@@ -8,6 +8,8 @@ import UserInfo from './UserInfo';
 const ChatArea = ({ showUserInfo, setShowUserInfo, setLatestMessage, setUserList, chatPerson, socketRef, onlineUsers }) => {
 
     const [latestSelfMessage, setLatestSelfMessage] = useState({})
+    const [isReply, setIsReply] = useState(false)
+    const [replyMessage, setReplyMessage] = useState("")
 
     const handleLatestSelfMessage = (message, time) => {
         setLatestSelfMessage({ message, time })
@@ -31,8 +33,25 @@ const ChatArea = ({ showUserInfo, setShowUserInfo, setLatestMessage, setUserList
                 {
                     !showUserInfo ?
                         <div className='h-full bg-[#131324] flex flex-col overflow-auto rounded-b-2xl'>
-                            <ChatMessage chatPerson={chatPerson} socketRef={socketRef} latestSelfMessage={latestSelfMessage} />
-                            <ChatInput setLatestMessage={setLatestMessage} setUserList={setUserList} chatPerson={chatPerson} socketRef={socketRef} handleLatestSelfMessage={handleLatestSelfMessage} />
+                            <ChatMessage
+                                setIsReply={setIsReply}
+                                setReplyMessage={setReplyMessage}
+                                isReply={isReply}
+                                replyMessage={replyMessage}
+                                chatPerson={chatPerson}
+                                socketRef={socketRef}
+                                latestSelfMessage={latestSelfMessage}
+                            />
+                            <ChatInput
+                                setIsReply={setIsReply}
+                                isReply={isReply}
+                                replyMessage={replyMessage}
+                                setLatestMessage={setLatestMessage}
+                                setUserList={setUserList}
+                                chatPerson={chatPerson}
+                                socketRef={socketRef}
+                                handleLatestSelfMessage={handleLatestSelfMessage}
+                            />
                         </div> :
                         <div className='h-full bg-[#131324] flex flex-col items-center justify-center overflow-auto rounded-b-2xl'>
                             <UserInfo user={chatPerson} />

@@ -2,8 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import moment from 'moment'
 import DefaultChat from './DefaultChat';
+import { FaReply } from "react-icons/fa";
 
-const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
+
+const ChatMessage = ({ setIsReply, setReplyMessage, isReply, replyMessage, latestSelfMessage, chatPerson, socketRef }) => {
     const [messages, setMessages] = useState([]);
     const [typingUserId, setTypingUserId] = useState(null)
     const scroll = useRef();
@@ -16,6 +18,7 @@ const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
                     sender: JSON.parse(localStorage.getItem('user'))._id,
                     reciever: chatPerson._id
                 });
+                console.log(data)
                 setMessages(data);
             } catch (err) {
                 console.log(err);
@@ -70,6 +73,11 @@ const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
         scroll.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
+    const handleReply = (msg) => {
+        setIsReply(true)
+        setReplyMessage(msg)
+    }
+
     return (
         <div className="h-[90%] px-5 pt-5 overflow-auto">
             <div className="flex flex-col gap-y-3">
@@ -78,7 +86,7 @@ const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
                     return (
                         <div
                             key={index}
-                            className={`flex items-end gap-x-2 ${isSelf ? 'justify-start flex-row-reverse' : 'justify-start'}`}
+                            className={`flex items-end gap-x-2 ${isSelf ? 'justify-start flex-row-reverse' : 'justify-start'} group`}
                         >
                             <div
                                 className="w-10 h-10"
@@ -89,10 +97,11 @@ const ChatMessage = ({ latestSelfMessage, chatPerson, socketRef }) => {
                                     ? 'border border-[#34a853] bg-[#34a85354] rounded-t-2xl rounded-l-2xl'
                                     : 'border border-[#673ab7] bg-[#683ab765] rounded-t-2xl rounded-r-2xl'
                                     } flex flex-col gap-y-2`}
-                            >
+                            >   <div>{msg.replyMessage?.message}</div>
                                 {msg.message} <br />
                                 <span className='self-end text-xs'>{moment(msg.time).calendar()}</span>
                             </div>
+                            <div className='hidden group-hover:block self-center cursor-pointer' onClick={() => handleReply(msg)}><FaReply size={17} /></div>
                         </div>
                     );
                 })}
