@@ -24,8 +24,8 @@ const Chat = () => {
     //socket ref => goes to all chat components
     const [chatPerson, setChatPerson] = useState(undefined);
     const [showUserInfo, setShowUserInfo] = useState(false)
+    const [unreadMessage, setUnreadMessage] = useState([])
     const socketRef = useRef()
-    console.log(userList)
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -72,7 +72,6 @@ const Chat = () => {
     }, [currentUser])
 
     function handleChatPerson(person) {
-        console.log(123, person)
         setChatPerson(person);
     }
 
@@ -91,6 +90,8 @@ const Chat = () => {
                         `}
                     >
                         <Contact
+                            unreadMessage={unreadMessage}
+                            setUnreadMessage={setUnreadMessage}
                             setShowUserInfo={setShowUserInfo}
                             setUserList={setUserList}
                             userList={userList}
@@ -116,6 +117,8 @@ const Chat = () => {
                     `}
                     >
                         <ChatArea
+                            unreadMessage={unreadMessage}
+                            setUnreadMessage={setUnreadMessage}
                             showUserInfo={showUserInfo}
                             setShowUserInfo={setShowUserInfo}
                             setUserList={setUserList}

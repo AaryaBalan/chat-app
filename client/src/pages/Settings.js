@@ -93,10 +93,10 @@ const Settings = () => {
             <div className="bg-[#131324] min-h-screen w-full flex justify-center items-center px-4 py-10">
                 <Navbar />
                 <div className="bg-[#00000076] w-full max-w-5xl rounded-lg p-8">
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-6 gap-y-10">
                         <h2 className="text-white text-2xl font-bold text-center">Profile Settings</h2>
                         <div className="flex flex-col lg:flex-row gap-8">
-                            <div className="flex-1 flex flex-col gap-4">
+                            <div className="flex-1 flex flex-col gap-4 gap-y-6">
                                 <div className="flex items-center gap-x-4 self-center">
                                     <div className='relative'>
                                         <div
@@ -137,7 +137,7 @@ const Settings = () => {
                                 />
                             </div>
 
-                            <div className="flex-1 flex flex-col gap-4">
+                            <div className="flex-1 flex flex-col gap-4 gap-y-6.5">
                                 <textarea
                                     required
                                     name="bio"
@@ -166,7 +166,7 @@ const Settings = () => {
                                 <input
                                     required
                                     name="dob"
-                                    value={userDetails.dob}
+                                    value={userDetails.dob ? userDetails.dob.slice(0, 10) : ''}
                                     onChange={handleChange}
                                     type="date"
                                     className="bg-transparent border border-[#673ab7] text-white px-3 py-2 rounded-md focus:outline-none focus:border-[#34a853]"

@@ -3,7 +3,6 @@ const Message = require('../models/messageModel')
 module.exports.addMessage = async (req, res, next) => {
     try {
         const { message, sender, reciever, replyMessage } = req.body
-        console.log('reply', replyMessage)
         const addedMessage = await Message.create({
             message,
             users: [sender, reciever],
@@ -48,5 +47,20 @@ module.exports.getAllMessage = async (req, res, next) => {
         res.json(formatMessage)
     } catch (err) {
         next(err)
+    }
+}
+
+// get message by message id
+module.exports.getMessageById = async (id) => {
+    try {
+        const message = await Message.findById(id)
+        if (message) {
+            return message
+        } else {
+            return null
+        }
+    } catch (err) {
+        console.log(err)
+        return err
     }
 }

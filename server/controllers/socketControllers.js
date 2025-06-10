@@ -1,3 +1,5 @@
+const { default: mongoose } = require('mongoose');
+const { getMessageById } = require('./messageController');
 const { setOnline, setOffline, getUserById } = require('./userController');
 const socketControllers = (io) => {
     return socket => {
@@ -12,18 +14,24 @@ const socketControllers = (io) => {
         })
 
         socket.on('sendMessage', async (data) => {
+            // handle edge case
             if (!data?.reciever || !data?.message) return;
 
+            // getting the socket id for both sender and reciever
             const socketIdOfReciever = global.usersIdMapSocketId.get(data.reciever)
             const socketIdOfSender = global.usersIdMapSocketId.get(data.sender)
+
             const sender = await getUserById(data.sender)
             const reciever = await getUserById(data.reciever)
+            const replyMessageInfo = await getMessageById(new mongoose.Types.ObjectId(data.replyMessage))
 
             if (socketIdOfReciever && socketIdOfSender) {
                 socket.to(socketIdOfReciever).emit('recieveMessage', {
                     message: data.message,
+                    _id: data._id,
                     sender,
-                    reciever
+                    reciever,
+                    replyMessage: replyMessageInfo
                 })
             }
         })

@@ -3,7 +3,6 @@ import { BiLogoGmail } from 'react-icons/bi';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const UserInfo = ({ user }) => {
-    console.log(user)
     return (
         <div className="max-w-md bg-[#1f1f2e] text-white rounded-xl shadow-lg p-6 flex flex-col items-center gap-y-4">
             {/* Profile Image */}

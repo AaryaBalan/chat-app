@@ -5,14 +5,23 @@ import { FaInfo } from "react-icons/fa6";
 import UserInfo from './UserInfo';
 
 
-const ChatArea = ({ showUserInfo, setShowUserInfo, setLatestMessage, setUserList, chatPerson, socketRef, onlineUsers }) => {
+const ChatArea = ({
+    unreadMessage,
+    showUserInfo,
+    setShowUserInfo,
+    setLatestMessage,
+    setUserList,
+    chatPerson,
+    socketRef,
+    onlineUsers
+}) => {
 
     const [latestSelfMessage, setLatestSelfMessage] = useState({})
     const [isReply, setIsReply] = useState(false)
     const [replyMessage, setReplyMessage] = useState("")
 
-    const handleLatestSelfMessage = (message, time) => {
-        setLatestSelfMessage({ message, time })
+    const handleLatestSelfMessage = (_id, message, time, replyMessage) => {
+        setLatestSelfMessage({ _id, message, time, replyMessage })
     }
     return (
         <>
@@ -43,9 +52,11 @@ const ChatArea = ({ showUserInfo, setShowUserInfo, setLatestMessage, setUserList
                                 latestSelfMessage={latestSelfMessage}
                             />
                             <ChatInput
+                                unreadMessage={unreadMessage}
                                 setIsReply={setIsReply}
                                 isReply={isReply}
                                 replyMessage={replyMessage}
+                                setReplyMessage={setReplyMessage}
                                 setLatestMessage={setLatestMessage}
                                 setUserList={setUserList}
                                 chatPerson={chatPerson}

@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
-const Contact = ({ setShowUserInfo, latestMessage, setLatestMessage, socketRef, setUserList, userList, currentUser, handleChatPerson, chatPerson, onlineUsers }) => {
-
-    const [unreadMessage, setUnreadMessage] = useState([])
+const Contact = ({
+    unreadMessage,
+    setUnreadMessage,
+    setShowUserInfo,
+    latestMessage,
+    setLatestMessage,
+    socketRef,
+    setUserList,
+    userList,
+    currentUser,
+    handleChatPerson,
+    chatPerson,
+    onlineUsers
+}) => {
 
     function handleChatChange(user) {
-        console.log(321, user)
         handleChatPerson(user)
         setShowUserInfo(false)
         if (user._id in unreadMessage) {

@@ -4,7 +4,19 @@ import EmojiPicker from 'emoji-picker-react';
 import axios from 'axios';
 import notification from '../assets/notification.mp3'
 
-const ChatInput = ({ setIsReply, isReply, replyMessage, setLatestMessage, setUserList, handleLatestSelfMessage, chatPerson, socketRef }) => {
+const ChatInput = ({
+    unreadMessage,
+    setIsReply,
+    isReply,
+    replyMessage,
+    setReplyMessage,
+    setLatestMessage,
+    setUserList,
+    handleLatestSelfMessage,
+    chatPerson,
+    socketRef
+}) => {
+
     const [messageInput, setMessageInput] = useState('');
     const [isEmojiDisplay, setIsEmojiDisplay] = useState(false);
     const emojiPickerRef = useRef(null);
@@ -18,21 +30,14 @@ const ChatInput = ({ setIsReply, isReply, replyMessage, setLatestMessage, setUse
         const audio = new Audio(notification);
         audio.play();
 
-        console.log(socketRef.current?.connected)
         const currentUser = JSON.parse(localStorage.getItem('user'))
 
-        //emiting sockets
-        socketRef.current.emit('sendMessage', {
-            sender: currentUser._id,
-            reciever: chatPerson._id,
-            message: messageInput
-        })
-        let replyId = ""
+        let replyId = null
         // uploading in db
         if (isReply && replyMessage.message.length !== 0) {
             replyId = replyMessage._id
         }
-        console.log(replyMessage)
+
         const { data } = await axios.post('http://localhost:5000/message/add', {
             sender: currentUser._id,
             reciever: chatPerson._id,
@@ -40,16 +45,29 @@ const ChatInput = ({ setIsReply, isReply, replyMessage, setLatestMessage, setUse
             replyMessage: replyId
         })
 
+        //emiting sockets
+        socketRef.current.emit('sendMessage', {
+            sender: currentUser._id,
+            reciever: chatPerson._id,
+            message: messageInput,
+            _id: data.message._id,
+            replyMessage: replyId
+        })
+
         //empty the text area
         setMessageInput('');
+        setIsReply(false)
+        setReplyMessage(null)
         // update the latest self message with time to render it in message area
-        handleLatestSelfMessage(data.message.message, data.message.createdAt)
+        handleLatestSelfMessage(data.message._id, data.message.message, data.message.createdAt, replyMessage)
         // update the latest message to render it in contacts components
         setLatestMessage({
             sender: currentUser,
             reciever: chatPerson,
             message: data.message.message
         })
+        //deleting the unread message becoz user sent the message to that person
+        delete unreadMessage[chatPerson._id]
         // update the recent user with the atmost top
         setUserList(prev => {
             const filtered = prev.filter(user => user._id !== chatPerson._id)
@@ -92,6 +110,13 @@ const ChatInput = ({ setIsReply, isReply, replyMessage, setLatestMessage, setUse
         })
     }
 
+    useEffect(() => {
+        if (textareaRef.current) {
+            // input is focus
+            textareaRef.current.focus()
+        }
+    }, [isReply, replyMessage])
+
     return (
         <div className="relative p-4 shadow-md bg-[#0a0a13] border-b-2 border-x-2 border-[#673ab7] rounded-b-2xl">
             {/* Emoji Picker */}
@@ -113,7 +138,7 @@ const ChatInput = ({ setIsReply, isReply, replyMessage, setLatestMessage, setUse
             {
                 isReply &&
                 <div className='flex justify-between mb-2 gap-x-3 items-center'>
-                    <div className='py-1 px-2  rounded-md ml-10 bg-[#ffffff21] text-white w-full'>{replyMessage.message}</div>
+                    <div className='py-1 px-2  rounded-md ml-10 bg-[#ffffff21] text-white w-full break-all'>{replyMessage.message}</div>
                     <div className='bg-[#ea4335] px-3 p-0.5 rounded-md cursor-pointer' onClick={() => setIsReply(false)}>X</div>
                 </div>
             }

@@ -3,13 +3,11 @@ import { FaHome, FaCompass, FaUsers, FaUserCircle, FaCog, FaBars, FaPowerOff } f
 import { IoCloseSharp } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 
-
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const sidebarRef = useRef(null);
-    const buttonRef = useRef(null); // 👈 reference to the toggle button
+    const buttonRef = useRef(null);
 
-    // Close on outside click
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (
@@ -42,7 +40,6 @@ const Navbar = () => {
 
     return (
         <div className="relative">
-            {/* Toggle Button */}
             <button
                 ref={buttonRef}
                 onClick={() => setIsOpen(prev => !prev)}
@@ -53,7 +50,6 @@ const Navbar = () => {
                 }
             </button>
 
-            {/* Sidebar */}
             <div
                 ref={sidebarRef}
                 className={`fixed top-0 left-0 h-full w-64 z-40 bg-[#0a0a13] text-white shadow-lg transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'
