@@ -110,6 +110,11 @@ const ChatInput = ({
         })
     }
 
+    const cancelReply = () => {
+        setIsReply(false)
+        setReplyMessage(null)
+    }
+
     useEffect(() => {
         if (textareaRef.current) {
             // input is focus
@@ -139,7 +144,7 @@ const ChatInput = ({
                 isReply &&
                 <div className='flex justify-between mb-2 gap-x-3 items-center'>
                     <div className='py-1 px-2  rounded-md ml-10 bg-[#ffffff21] text-white w-full break-all'>{replyMessage.message}</div>
-                    <div className='bg-[#ea4335] px-3 p-0.5 rounded-md cursor-pointer' onClick={() => setIsReply(false)}>X</div>
+                    <div className='bg-[#ea4335] px-3 p-0.5 rounded-md cursor-pointer' onClick={cancelReply}>X</div>
                 </div>
             }
 
