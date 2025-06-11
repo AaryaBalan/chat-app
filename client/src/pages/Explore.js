@@ -36,8 +36,8 @@ const Explore = () => {
     return (
         <>
             <Navbar />
-            <div className="bg-[#131324] min-h-screen w-full flex justify-center py-8 px-8 overflow-x-hidden">
-                <div className="w-full max-w-[1500px] rounded-lg p-8 bg-[#00000076] mx-auto ">
+            <div className="bg-[#131324] min-h-screen w-full flex justify-center py-8 px-2 md:px-8 overflow-x-hidden">
+                <div className="w-full max-w-[1500px] rounded-lg py-8 bg-[#00000076] mx-auto ">
                     <h2 className="text-white text-3xl font-bold text-center mb-10">Explore Developers</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-white px-4">
                         {userList.map((user, index) => (
@@ -52,7 +52,7 @@ const Explore = () => {
                                 <div className="text-center">
                                     <h3 className="text-xl font-semibold">{user.firstName} {user.lastName}</h3>
                                     <p className="text-sm text-gray-300">@{user.username}</p>
-                                    <p className="text-sm mt-2 text-gray-400 italic">{user.bio || "No bio added."}</p>
+                                    <p className="text-sm mt-2 text-gray-400 italic text-justify">{user.bio || "No bio added."}</p>
                                 </div>
                                 <div className="flex justify-center gap-4">
                                     <a href={`mailto:${user.email}`} className="hover:text-[#ea4335] p-1 rounded border bg-[#ea44354d] border-[#ea4335]" title="Gmail">

@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { LuSticker, LuSendHorizontal } from 'react-icons/lu';
+import { IoCloseSharp } from "react-icons/io5";
 import EmojiPicker from 'emoji-picker-react';
 import axios from 'axios';
 import notification from '../assets/notification.mp3'
+import { formatMessage } from '../utilities/utility';
 
 const ChatInput = ({
     unreadMessage,
@@ -143,8 +145,12 @@ const ChatInput = ({
             {
                 isReply &&
                 <div className='flex justify-between mb-2 gap-x-3 items-center'>
-                    <div className='py-1 px-2  rounded-md ml-10 bg-[#ffffff21] text-white w-full break-all'>{replyMessage.message}</div>
-                    <div className='bg-[#ea4335] px-3 p-0.5 rounded-md cursor-pointer' onClick={cancelReply}>X</div>
+                    <div className='py-1 px-2  rounded-md ml-10 bg-[#ffffff21] text-white w-full break-all'>
+                        {formatMessage(replyMessage.message)}
+                    </div>
+                    <div className='bg-[#ea4335] px-3 p-0.5 rounded-md cursor-pointer' onClick={cancelReply}>
+                        <IoCloseSharp size={24}/>
+                    </div>
                 </div>
             }
 
@@ -169,7 +175,7 @@ const ChatInput = ({
                     autoComplete="off"
                     rows={1}
                     ref={textareaRef}
-                    onKeyUp={(e) => handleTyping(e)}
+                    onKeyDown={(e) => handleTyping(e)}
                 />
                 <button
                     type="submit"

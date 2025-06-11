@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { toastOptions } from '../utilities/utility';
 
 const Login = () => {
 
@@ -27,15 +28,6 @@ const Login = () => {
             [name]: value
         }));
     }
-
-    // toast options
-    const toastOptions = {
-        position: "bottom-right",
-        autoClose: 3000,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "Dark",
-    };
 
     // handleing the registration form submission
     const submitLogin = async (e) => {

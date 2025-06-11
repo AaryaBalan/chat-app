@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { TfiReload } from "react-icons/tfi";
+import { toastOptions } from '../utilities/utility';
 
 const SetAvatar = () => {
     const Navigate = useNavigate();
@@ -28,15 +29,6 @@ const SetAvatar = () => {
     function selectAvatar(index) {
         setSelectedAvatarIndex(index);
     }
-
-    // toast options
-    const toastOptions = {
-        position: "bottom-right",
-        autoClose: 3000,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "Dark",
-    };
 
     function setProfileImage() {
         if (selectedAvatarIndex === null) {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment'
 import DefaultChat from './DefaultChat';
 import { FaReply, FaChevronDown } from "react-icons/fa";
+import {formatMessage} from '../utilities/utility'
 
 
 const ChatMessage = ({
@@ -117,7 +118,6 @@ const ChatMessage = ({
         }, 2000)
     }
 
-
     return (
         <div className="h-full px-1 pt-5 overflow-auto overflow-x-hidden">
             <div className="flex flex-col relative">
@@ -147,10 +147,10 @@ const ChatMessage = ({
                                             : chatPerson?.username}
                                     </span>
                                     <br />
-                                    {msg.replyMessage?.message}
+                                    {formatMessage(msg.replyMessage?.message)}
                                 </div>
 
-                                <div className='break-words'>{msg.message}</div>
+                                <div className='break-words'>{formatMessage(msg.message)}</div>
                                 <span className={`self-end text-xs font-extrabold ${isSelf ? "text-[#34a853]" : "text-[#673ab7]"}`}>{moment(msg.time).calendar()}</span>
                             </div>
                             <div className={`group-hover:block self-center cursor-pointer ${msg._id === activeReplyMessageId ? "block" : "hidden"}`} onClick={() => handleReply(msg)}><FaReply size={17} /></div>
