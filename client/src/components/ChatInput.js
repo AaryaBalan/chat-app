@@ -29,6 +29,7 @@ const ChatInput = ({
         e.preventDefault();
         if (!messageInput.trim()) return;
 
+        // play the audio when the user sent the message
         const audio = new Audio(notification);
         audio.play();
 
@@ -39,7 +40,7 @@ const ChatInput = ({
         if (isReply && replyMessage.message.length !== 0) {
             replyId = replyMessage._id
         }
-
+        // sending post request to add the data in mongodb
         const { data } = await axios.post('http://localhost:5000/message/add', {
             sender: currentUser._id,
             reciever: chatPerson._id,
@@ -149,7 +150,7 @@ const ChatInput = ({
                         {formatMessage(replyMessage.message)}
                     </div>
                     <div className='bg-[#ea4335] px-3 p-0.5 rounded-md cursor-pointer' onClick={cancelReply}>
-                        <IoCloseSharp size={24}/>
+                        <IoCloseSharp size={24} />
                     </div>
                 </div>
             }

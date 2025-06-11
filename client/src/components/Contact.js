@@ -57,7 +57,7 @@ const Contact = ({
         return () => {
             socket.off('recieveMessage', handleRecieveMessage)
         }
-    }, [socketRef, latestMessage, setLatestMessage, setUserList])
+    }, [socketRef, latestMessage, setLatestMessage, setUserList, setUnreadMessage])
 
     return (
         <div className="flex flex-col gap-y-5 h-full w-full">
@@ -88,7 +88,10 @@ const Contact = ({
                                 }
                             </div>
                         </div>
-                        <div className={`bg-[#1cd14f] w-6 h-6 rounded-full flex items-center justify-center text-black shrink-0 ${user._id in unreadMessage ? 'block' : 'hidden'}`}>{unreadMessage[user._id] < 10 ? unreadMessage[user._id] : '9+'}</div>
+                        <div className={`bg-[#1cd14f] w-6 h-6 rounded-full flex items-center justify-center text-black shrink-0 ${user._id in unreadMessage ? 'block' : 'hidden'}`}>
+                            {unreadMessage[user._id] < 10 ? unreadMessage[user._id] : '9+'}
+                        </div>
+
                     </div>
                 ))}
             </div>

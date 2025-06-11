@@ -18,6 +18,7 @@ module.exports.getAllUsersExpectMe = async (req, res, next) => {
     }
 }
 
+// setting active status for the user
 module.exports.setOnline = async (userId) => {
     try {
         const user = await User.findByIdAndUpdate(userId, { active: true })
@@ -28,6 +29,7 @@ module.exports.setOnline = async (userId) => {
     }
 }
 
+// setting active status off for the user
 module.exports.setOffline = async (userId) => {
     try {
         const user = await User.findByIdAndUpdate(userId, { active: false })
@@ -117,7 +119,7 @@ module.exports.recentUsers = async (userID) => {
     return users
 }
 
-
+// get recent users
 module.exports.getRecentUsers = async (req, res, next) => {
     try {
         const users = await module.exports.recentUsers(req.body.userId)
@@ -127,9 +129,9 @@ module.exports.getRecentUsers = async (req, res, next) => {
     }
 }
 
+// update the user by id
 module.exports.updateUserById = async (userId, data) => {
     try {
-        // Spread data directly to update fields at root level
         const updatedUser = await User.findByIdAndUpdate(
             userId,
             data,
@@ -137,8 +139,7 @@ module.exports.updateUserById = async (userId, data) => {
         );
         return updatedUser;
     } catch (err) {
-        // You can log or throw here based on preference
-        throw err;
+        console.log(err)
     }
 };
 
@@ -146,14 +147,10 @@ module.exports.updateUserById = async (userId, data) => {
 module.exports.updateUserByIdRoute = async (req, res, next) => {
     try {
         const userId = req.params.userId;
-
-        // Adjust to match frontend: the entire user data is sent in req.body
         const userData = req.body;
 
         // Validate userData if needed before update
-
         const updatedUser = await module.exports.updateUserById(userId, userData);
-
         if (updatedUser) {
             res.json({ status: true, updatedUser });
         } else {
