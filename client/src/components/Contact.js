@@ -1,8 +1,9 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 const Contact = ({
-    unreadMessage,
-    setUnreadMessage,
+    unseen,
+    setUnseen,
     setShowUserInfo,
     latestMessage,
     setLatestMessage,
@@ -15,14 +16,17 @@ const Contact = ({
     onlineUsers
 }) => {
 
-    function handleChatChange(user) {
-        handleChatPerson(user)
-        setShowUserInfo(false)
-        if (user._id in unreadMessage) {
-            delete unreadMessage[user._id]
-        }
-    }
     const [typingUserId, setTypingUserId] = useState(undefined)
+
+    async function handleChatChange(user) {
+        handleChatPerson(user)
+        setUnseen(prev => {
+            const newUnseen = { ...prev }
+            delete newUnseen[user?._id]
+            return newUnseen
+        })
+        setShowUserInfo(false)
+    }
 
     useEffect(() => {
         if (!socketRef.current) return;
@@ -48,16 +52,30 @@ const Contact = ({
                 return [data.sender, ...filtered]
             })
             setLatestMessage(data)
-            setUnreadMessage(prev => ({
-                ...prev,
-                [data.sender._id]: (prev[data.sender._id] || 0) + 1
-            }))
+            setUnseen(prev => (
+                {
+                    ...prev,
+                    [data.sender._id]: (prev[data.sender._id] || 0) + 1
+                }
+            ))
         }
         socket.on('recieveMessage', handleRecieveMessage)
         return () => {
             socket.off('recieveMessage', handleRecieveMessage)
         }
-    }, [socketRef, latestMessage, setLatestMessage, setUserList, setUnreadMessage])
+    }, [socketRef, latestMessage, setLatestMessage, setUserList])
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const handleSetSeen = async () => {
+            const setSeen = await axios.put('http://localhost:5000/message/unseen', {
+                userId: user?._id,
+                chatPersonId: chatPerson?._id
+            })
+            console.log(setSeen.data)
+        }
+        handleSetSeen()
+    }, [chatPerson])
 
     return (
         <div className="flex flex-col gap-y-5 h-full w-full">
@@ -88,8 +106,8 @@ const Contact = ({
                                 }
                             </div>
                         </div>
-                        <div className={`bg-[#1cd14f] w-6 h-6 rounded-full flex items-center justify-center text-black shrink-0 ${user._id in unreadMessage ? 'block' : 'hidden'}`}>
-                            {unreadMessage[user._id] < 10 ? unreadMessage[user._id] : '9+'}
+                        <div className={`bg-[#1cd14f] w-6 h-6 rounded-full flex items-center justify-center text-black shrink-0 ${user._id in unseen ? 'block' : 'hidden'}`}>
+                            {unseen[user._id] < 10 ? unseen[user._id] : '9+'}
                         </div>
 
                     </div>

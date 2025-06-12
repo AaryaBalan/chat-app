@@ -30,6 +30,7 @@ const server = app.listen(process.env.PORT, '0.0.0.0', () => {
 });
 
 const io = socket(server, {
+    connectionStateRecovery: {},
     cors: {
         origin: 'http://localhost:3000',
         credentials: true

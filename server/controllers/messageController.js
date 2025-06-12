@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose')
 const Message = require('../models/messageModel')
 
 module.exports.addMessage = async (req, res, next) => {
@@ -9,6 +10,7 @@ module.exports.addMessage = async (req, res, next) => {
             sender,
             replyMessage
         })
+        await module.exports.setSeen(sender, reciever)
         res.json({ status: true, message: addedMessage })
     } catch (err) {
         next(err)
@@ -62,5 +64,72 @@ module.exports.getMessageById = async (id) => {
     } catch (err) {
         console.log(err)
         return err
+    }
+}
+
+// unseen msg by user
+module.exports.getUnseenMessages = async (userId) => {
+    const rawMessages = await Message.aggregate([
+        {
+            $match: {
+                users: { $in: [userId] },
+                seen: false,
+                sender: { $ne: new mongoose.Types.ObjectId(userId) }
+            }
+        },
+        {
+            $group: {
+                _id: "$sender",      // group by senderId
+                count: { $sum: 1 }   // count messages
+            }
+        }
+    ]);
+
+    // Convert array to object: { senderId: count, ... }
+    const result = {};
+    rawMessages.forEach(msg => {
+        result[msg._id.toString()] = msg.count;
+    });
+
+    return result;
+};
+
+
+module.exports.getUnseenMessagesRoute = async (req, res, next) => {
+    try {
+        const { userId } = req.body
+        const unseenMessage = await module.exports.getUnseenMessages(userId)
+        res.json(unseenMessage)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+module.exports.setSeen = async (userId, chatPersonId) => {
+    try {
+        const messages = await Message.updateMany({
+            users: {
+                $all: [userId, chatPersonId]
+            },
+            sender: new mongoose.Types.ObjectId(chatPersonId),
+            seen: false
+        }, {
+            $set: { seen: true }
+        })
+        return messages
+    } catch (err) {
+        return err
+    }
+}
+
+// delete unseen notification and set as all seen
+module.exports.setAllSeenRoute = async (req, res, next) => {
+    try {
+        console.log(req.body)
+        const { userId, chatPersonId } = req.body
+        const messages = await module.exports.setSeen(userId, chatPersonId)
+        res.json(messages)
+    } catch (err) {
+        console.log(err)
     }
 }

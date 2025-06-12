@@ -7,7 +7,7 @@ import notification from '../assets/notification.mp3'
 import { formatMessage } from '../utilities/utility';
 
 const ChatInput = ({
-    unreadMessage,
+    setUnseen,
     setIsReply,
     isReply,
     replyMessage,
@@ -59,6 +59,14 @@ const ChatInput = ({
 
         //empty the text area
         setMessageInput('');
+
+        setUnseen(prev => {
+            const newUnseen = { ...prev }
+            delete newUnseen[chatPerson?._id]
+            return newUnseen
+        })
+
+        //hide reply
         setIsReply(false)
         setReplyMessage(null)
         // update the latest self message with time to render it in message area
@@ -69,8 +77,6 @@ const ChatInput = ({
             reciever: chatPerson,
             message: data.message.message
         })
-        //deleting the unread message becoz user sent the message to that person
-        delete unreadMessage[chatPerson._id]
         // update the recent user with the atmost top
         setUserList(prev => {
             const filtered = prev.filter(user => user._id !== chatPerson._id)

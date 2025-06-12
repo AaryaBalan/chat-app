@@ -24,11 +24,21 @@ const Chat = () => {
     //socket ref => goes to all chat components
     const [chatPerson, setChatPerson] = useState(undefined);
     const [showUserInfo, setShowUserInfo] = useState(false)
-    const [unreadMessage, setUnreadMessage] = useState([])
+    const [unseen, setUnseen] = useState([])
     const socketRef = useRef()
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
+        const handleUnseen = async () => {
+            const unseenMessage = await axios.post('http://localhost:5000/message/unseen', {
+                userId: user._id
+            })
+            console.log(unseenMessage.data)
+            setUnseen(unseenMessage.data)
+        }
+        if (user) {
+            handleUnseen()
+        }
         setCurrentUser(user);
         if (!user) {
             navigate('/login');
@@ -90,8 +100,8 @@ const Chat = () => {
                         `}
                     >
                         <Contact
-                            unreadMessage={unreadMessage}
-                            setUnreadMessage={setUnreadMessage}
+                            unseen={unseen}
+                            setUnseen={setUnseen}
                             setShowUserInfo={setShowUserInfo}
                             setUserList={setUserList}
                             userList={userList}
@@ -117,8 +127,7 @@ const Chat = () => {
                     `}
                     >
                         <ChatArea
-                            unreadMessage={unreadMessage}
-                            setUnreadMessage={setUnreadMessage}
+                            setUnseen={setUnseen}
                             showUserInfo={showUserInfo}
                             setShowUserInfo={setShowUserInfo}
                             setUserList={setUserList}

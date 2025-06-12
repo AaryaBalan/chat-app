@@ -78,7 +78,6 @@ const ChatMessage = ({
             const currentUserId = JSON.parse(localStorage.getItem("user"))._id;
             if (waitingUser === currentUserId && typingUser === chatPerson._id) {
                 setTypingUserId(typingUser);
-                // Auto-hide typing after 2s
                 setTimeout(() => {
                     setTypingUserId(null);
                 }, 3000);
@@ -128,7 +127,7 @@ const ChatMessage = ({
                             onClick={() => handleReplyOption(msg._id)}
                             id={msg._id}
                             key={index}
-                            className={`px-3 py-3 flex items-end gap-x-2 ${isSelf ? 'justify-start flex-row-reverse' : 'justify-start'} ${highlightMessageId === msg._id ? 'bg-gray-800 rounded-md transition-all delay-300' : ""} group`}
+                            className={`px-3 py-3 flex items-end gap-x-2 ${isSelf ? 'justify-start flex-row-reverse' : 'justify-start'} ${highlightMessageId === msg._id ? 'bg-gray-800 rounded-md' : ""} group`}
                         >
                             <div
                                 className="w-10 h-10"

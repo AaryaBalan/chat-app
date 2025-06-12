@@ -6,7 +6,7 @@ import UserInfo from './UserInfo';
 
 
 const ChatArea = ({
-    unreadMessage,
+    setUnseen,
     showUserInfo,
     setShowUserInfo,
     setLatestMessage,
@@ -52,7 +52,7 @@ const ChatArea = ({
                                 latestSelfMessage={latestSelfMessage}
                             />
                             <ChatInput
-                                unreadMessage={unreadMessage}
+                                setUnseen={setUnseen}
                                 setIsReply={setIsReply}
                                 isReply={isReply}
                                 replyMessage={replyMessage}
