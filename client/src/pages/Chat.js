@@ -140,7 +140,6 @@ const Chat = () => {
                     </div>
                 }
 
-
                 {/* default chat */}
                 {chatPerson === undefined &&
                     <div className={`

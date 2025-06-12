@@ -59,7 +59,7 @@ const ChatInput = ({
 
         //empty the text area
         setMessageInput('');
-
+        // removing unseen notification
         setUnseen(prev => {
             const newUnseen = { ...prev }
             delete newUnseen[chatPerson?._id]
@@ -126,7 +126,6 @@ const ChatInput = ({
 
     useEffect(() => {
         if (textareaRef.current) {
-            // input is focus
             textareaRef.current.focus()
         }
     }, [isReply, replyMessage])

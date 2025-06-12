@@ -24,6 +24,7 @@ module.exports.registerUser = async (req, res, next) => {
     }
 }
 
+// login a user
 module.exports.loginUser = async (req, res, next) => {
     try {
         const { username, password } = req.body;
@@ -42,6 +43,7 @@ module.exports.loginUser = async (req, res, next) => {
     }
 }
 
+// setting up the profile image of the user
 module.exports.setProfileImage = async (req, res, next) => {
     try {
         const userId = req.params.id;

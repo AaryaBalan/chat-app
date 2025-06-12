@@ -4,7 +4,6 @@ import ChatMessage from './ChatMessage'
 import { FaInfo } from "react-icons/fa6";
 import UserInfo from './UserInfo';
 
-
 const ChatArea = ({
     setUnseen,
     showUserInfo,

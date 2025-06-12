@@ -31,7 +31,7 @@ const Contact = ({
     useEffect(() => {
         if (!socketRef.current) return;
         const socket = socketRef.current;
-        const handleTyping = ({ typingUser, waitingUser }) => {
+        const handleTyping = ({ typingUser }) => {
             setTypingUserId(typingUser);
             setTimeout(() => {
                 setTypingUserId(null);
@@ -63,7 +63,7 @@ const Contact = ({
         return () => {
             socket.off('recieveMessage', handleRecieveMessage)
         }
-    }, [socketRef, latestMessage, setLatestMessage, setUserList])
+    }, [socketRef, latestMessage, setLatestMessage, setUserList, setUnseen])
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
@@ -97,7 +97,6 @@ const Contact = ({
                             </div>
                             <div className='truncate'>
                                 <h2 className="text-base md:text-lg font-semibold truncate text-inherit">{user.username}</h2>
-                                {/* <div className='text-[#1cd14f]'>{typingUserId === user._id && "Typing..."}</div> */}
                                 {typingUserId === user._id ?
                                     <div className='text-[#1cd14f] flex gap-x-2'>
                                         <span className='dotSpan'>a</span><span className='dotSpan'>b</span><span className='dotSpan'>c</span>

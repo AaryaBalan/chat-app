@@ -55,7 +55,7 @@ module.exports.recentUsers = async (userID) => {
     const users = await Message.aggregate([
         {
             $match: {
-                users: { $in: [userID] } // use plain string
+                users: { $in: [userID] } 
             }
         },
         {
@@ -64,7 +64,7 @@ module.exports.recentUsers = async (userID) => {
                     $filter: {
                         input: "$users",
                         as: 'u',
-                        cond: { $ne: ["$$u", userID] } // again, compare as string
+                        cond: { $ne: ["$$u", userID] } 
                     }
                 }
             }

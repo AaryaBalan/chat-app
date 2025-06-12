@@ -1,6 +1,7 @@
 const { default: mongoose } = require('mongoose');
 const { getMessageById } = require('./messageController');
 const { setOnline, setOffline, getUserById } = require('./userController');
+
 const socketControllers = (io) => {
     return socket => {
         let id = ''

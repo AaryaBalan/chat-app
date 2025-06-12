@@ -1,6 +1,7 @@
 const { default: mongoose } = require('mongoose')
 const Message = require('../models/messageModel')
 
+// add a new message to the db
 module.exports.addMessage = async (req, res, next) => {
     try {
         const { message, sender, reciever, replyMessage } = req.body
@@ -17,6 +18,7 @@ module.exports.addMessage = async (req, res, next) => {
     }
 }
 
+// get all message between the 2 peoples
 module.exports.getAllMessage = async (req, res, next) => {
     try {
         const { sender, reciever } = req.body
@@ -79,13 +81,11 @@ module.exports.getUnseenMessages = async (userId) => {
         },
         {
             $group: {
-                _id: "$sender",      // group by senderId
-                count: { $sum: 1 }   // count messages
+                _id: "$sender",   
+                count: { $sum: 1 }
             }
         }
     ]);
-
-    // Convert array to object: { senderId: count, ... }
     const result = {};
     rawMessages.forEach(msg => {
         result[msg._id.toString()] = msg.count;
@@ -94,7 +94,7 @@ module.exports.getUnseenMessages = async (userId) => {
     return result;
 };
 
-
+// unseen route
 module.exports.getUnseenMessagesRoute = async (req, res, next) => {
     try {
         const { userId } = req.body
@@ -105,6 +105,7 @@ module.exports.getUnseenMessagesRoute = async (req, res, next) => {
     }
 }
 
+// set message as seen to the user
 module.exports.setSeen = async (userId, chatPersonId) => {
     try {
         const messages = await Message.updateMany({

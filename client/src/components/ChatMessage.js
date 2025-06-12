@@ -5,7 +5,6 @@ import DefaultChat from './DefaultChat';
 import { FaReply, FaChevronDown } from "react-icons/fa";
 import {formatMessage} from '../utilities/utility'
 
-
 const ChatMessage = ({
     setIsReply,
     setReplyMessage,
