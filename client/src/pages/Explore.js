@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { BiLogoGmail } from 'react-icons/bi';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
+import { usersExpectMeRoute } from '../utilities/utility';
 
 const Explore = () => {
     const [userList, setUserList] = useState([]);
@@ -19,7 +20,7 @@ const Explore = () => {
         const currentUser = JSON.parse(localStorage.getItem('user'));
         const getAllUsersExceptMe = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/users/all/${currentUser._id}`);
+                const response = await axios.get(`${usersExpectMeRoute}/${currentUser._id}`);
                 if (response.data.status) {
                     setUserList(response.data.users);
                 } else {
@@ -36,7 +37,7 @@ const Explore = () => {
     return (
         <>
             <Navbar />
-            <div className="bg-[#131324] min-h-screen w-full flex justify-center py-8 px-2 md:px-8 overflow-x-hidden">
+            <div className="bg-[#131324] min-h-[100dvh] w-full flex justify-center py-8 px-2 md:px-8 overflow-x-hidden">
                 <div className="w-full max-w-[1500px] rounded-lg py-8 bg-[#00000076] mx-auto ">
                     <h2 className="text-white text-3xl font-bold text-center mb-10">Explore Developers</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-white px-4">

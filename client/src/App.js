@@ -17,9 +17,9 @@ const App = () => {
         <Route path='/setAvatar' element={<SetAvatar />} />
         <Route path='/settings' element={<Settings />} />
         <Route path='/' element={<Chat />} />
+        <Route path='/message/:id' element={<Chat />} />
         <Route path='/explore' element={<Explore />} />
         <Route path='/info' element={<UserInfo />} />
-
       </Routes>
     </Router>
   )

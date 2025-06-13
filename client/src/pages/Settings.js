@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from '../components/Navbar';
 import { MdEdit } from "react-icons/md";
 import { Link } from 'react-router-dom';
+import { updateUserRoute } from '../utilities/utility';
 
 
 const Settings = () => {
@@ -61,7 +62,7 @@ const Settings = () => {
         setLoading(true);
 
         try {
-            const res = await axios.put(`http://localhost:5000/users/update/${user._id}`, userDetails);
+            const res = await axios.put(`${updateUserRoute}/${user._id}`, userDetails);
 
             if (res.data.status === false) {
                 toast.error(res.data.message || 'Update failed!', toastOptions);
@@ -90,7 +91,7 @@ const Settings = () => {
 
     return (
         <>
-            <div className="bg-[#131324] min-h-screen w-full flex justify-center items-center px-4 py-10">
+            <div className="bg-[#131324] min-h-[100dvh] w-full flex justify-center items-center px-4 py-10">
                 <Navbar />
                 <div className="bg-[#00000076] w-full max-w-5xl rounded-lg p-8">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-6 gap-y-10">

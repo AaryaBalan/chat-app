@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment'
 import DefaultChat from './DefaultChat';
 import { FaReply, FaChevronDown } from "react-icons/fa";
-import {formatMessage} from '../utilities/utility'
+import { allMessageRoute, formatMessage } from '../utilities/utility'
 
 const ChatMessage = ({
     setIsReply,
@@ -24,7 +24,7 @@ const ChatMessage = ({
     useEffect(() => {
         const getAllMessage = async () => {
             try {
-                const { data } = await axios.post('http://localhost:5000/message/all', {
+                const { data } = await axios.post(allMessageRoute, {
                     sender: JSON.parse(localStorage.getItem('user'))._id,
                     reciever: chatPerson._id
                 });

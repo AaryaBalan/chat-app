@@ -4,7 +4,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import EmojiPicker from 'emoji-picker-react';
 import axios from 'axios';
 import notification from '../assets/notification.mp3'
-import { formatMessage } from '../utilities/utility';
+import { formatMessage, BASE_URL, addMessageRoute } from '../utilities/utility';
 
 const ChatInput = ({
     setUnseen,
@@ -41,7 +41,7 @@ const ChatInput = ({
             replyId = replyMessage._id
         }
         // sending post request to add the data in mongodb
-        const { data } = await axios.post('http://localhost:5000/message/add', {
+        const { data } = await axios.post(addMessageRoute, {
             sender: currentUser._id,
             reciever: chatPerson._id,
             message: messageInput,

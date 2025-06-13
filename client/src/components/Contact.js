@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { unseenMessageRoute } from '../utilities/utility';
 
 const Contact = ({
     unseen,
@@ -68,7 +70,7 @@ const Contact = ({
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
         const handleSetSeen = async () => {
-            const setSeen = await axios.put('http://localhost:5000/message/unseen', {
+            const setSeen = await axios.put(unseenMessageRoute, {
                 userId: user?._id,
                 chatPersonId: chatPerson?._id
             })

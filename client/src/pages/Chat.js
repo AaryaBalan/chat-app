@@ -6,6 +6,7 @@ import ChatArea from '../components/ChatArea';
 import DefaultChat from '../components/DefaultChat';
 import { io } from 'socket.io-client'
 import Navbar from '../components/Navbar';
+import { recentUsersRoute, unseenMessageRoute, usersExpectMeRoute } from '../utilities/utility';
 
 const Chat = () => {
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Chat = () => {
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
         const handleUnseen = async () => {
-            const unseenMessage = await axios.post('http://localhost:5000/message/unseen', {
+            const unseenMessage = await axios.post(unseenMessageRoute, {
                 userId: user._id
             })
             console.log(unseenMessage.data)
@@ -49,13 +50,13 @@ const Chat = () => {
         const user = JSON.parse(localStorage.getItem('user'));
         const fetchUser = async () => {
             try {
-                const users = await axios.post('http://localhost:5000/users/recent', {
+                const users = await axios.post(recentUsersRoute, {
                     userId: user?._id
                 })
                 setUserList(users.data)
                 const recentUsers = users.data
                 const recentUsersId = recentUsers?.map(u => u._id)
-                const { data } = await axios.get(`http://localhost:5000/users/all/${user._id}`);
+                const { data } = await axios.get(`${usersExpectMeRoute}/${user._id}`);
                 if (data.status === false) {
                     console.error(data.message);
                     return
@@ -73,7 +74,7 @@ const Chat = () => {
 
     useEffect(() => {
         if (currentUser && currentUser._id) {
-            socketRef.current = io('http://localhost:5000/')
+            socketRef.current = io('http://192.168.31.103:5000')
             socketRef.current.emit('online', currentUser._id)
             socketRef.current.emit('addUser', currentUser._id)
             socketRef.current.on('online', users => setOnlineUsers(users))
@@ -86,7 +87,7 @@ const Chat = () => {
     }
 
     return (
-        <div className="bg-[#131324] min-h-screen w-full flex justify-center items-center px-2 py-4 md:px-6 md:py-10">
+        <div className="bg-[#131324] min-h-[100vh] w-full flex justify-center items-center px-2 py-4 md:px-6 md:py-10">
             <Navbar />
             <div className="flex flex-col md:flex-row gap-y-4 md:gap-x-6 bg-[#00000076] w-full max-w-7xl rounded-lg p-4 md:p-8 h-[90vh] overflow-hidden">
 

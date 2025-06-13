@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { TfiReload } from "react-icons/tfi";
-import { toastOptions } from '../utilities/utility';
+import { setAvatarRoute, toastOptions } from '../utilities/utility';
 
 const SetAvatar = () => {
     const Navigate = useNavigate();
@@ -38,7 +38,7 @@ const SetAvatar = () => {
         const user = JSON.parse(localStorage.getItem('user'));
         const sendProfileImage = async () => {
             try {
-                const { data } = await axios.post(`http://localhost:5000/api/auth/setAvatar/${user._id}`, {
+                const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
                     profileImage: avatarLists[selectedAvatarIndex]
                 })
                 if (data.status === false) {
@@ -60,10 +60,10 @@ const SetAvatar = () => {
 
     return (
         <>
-            <div className='bg-[#131324] min-h-screen w-full flex justify-center items-center px-4 py-8'>
+            <div className='bg-[#131324] min-h-[100dvh] w-full flex justify-center items-center px-4 py-8'>
                 <div className='bg-[#00000076] w-full max-w-2xl rounded-lg p-8 flex flex-col gap-y-10'>
                     <h1 className='text-white text-center text-4xl font-bold'>Pick your Avatar</h1>
-                    <div className='flex flex-wrap justify-center items-center gap-x-8 gap-y-10 mt-6'>
+                    <div className='flex flex-wrap justify-center items-center gap-4 md:gap-x-8 md:gap-y-10 mt-6'>
                         {
                             avatarLists.map((avatar, index) => (
                                 <div

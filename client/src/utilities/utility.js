@@ -35,3 +35,20 @@ export const toastOptions = {
     draggable: true,
     theme: "Dark",
 };
+
+export const BASE_URL = window.location.hostname === "localhost" ? "http://localhost:5000" : "http://192.168.31.103:5000";
+
+// auth routes
+export const registerRoute = `${BASE_URL}/api/auth/register`
+export const loginRoute = `${BASE_URL}/api/auth/login`
+export const setAvatarRoute = `${BASE_URL}/api/auth/setAvatar` // userId
+
+// users route
+export const usersExpectMeRoute = `${BASE_URL}/users/all` // userId
+export const recentUsersRoute = `${BASE_URL}/users/recent`
+export const updateUserRoute = `${BASE_URL}/users/update` // userId
+
+// message route
+export const addMessageRoute = `${BASE_URL}/message/add`
+export const allMessageRoute = `${BASE_URL}/message/all`
+export const unseenMessageRoute = `${BASE_URL}/message/unseen`

@@ -8,7 +8,22 @@ const app = express();
 const socket = require('socket.io')
 const socketControllers = require('./controllers/socketControllers')
 
-app.use(cors());
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://192.168.31.103:3000'
+];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -31,10 +46,10 @@ const server = app.listen(process.env.PORT, '0.0.0.0', () => {
 
 const io = socket(server, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: allowedOrigins,
         credentials: true
     }
-})
+});
 
 global.usersIdMapSocketId = new Map()
 global.onlineUsers = new Set()

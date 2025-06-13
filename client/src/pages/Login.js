@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import { toastOptions } from '../utilities/utility';
+import { loginRoute, toastOptions } from '../utilities/utility';
 
 const Login = () => {
 
@@ -42,7 +42,7 @@ const Login = () => {
             return;
         }
         try {
-            const userData = await axios.post('http://localhost:5000/api/auth/login', {
+            const userData = await axios.post(loginRoute, {
                 username,
                 password
             });
@@ -65,7 +65,9 @@ const Login = () => {
 
     return (
         <>
-            <div className='bg-[#131324] min-h-screen w-full flex justify-center items-center px-4 py-8'>
+            {/* <div className='bg-[#131324] min-h-[100dvh] w-full flex justify-center items-center px-4 py-8'> */}
+            <div className='bg-[#131324] h-screen w-full flex justify-center items-center px-4 py-2 overflow-y-hidden'>
+
                 <div className='bg-[#00000076] w-full max-w-md rounded-lg p-8'>
                     <form className='w-full' onSubmit={(e) => submitLogin(e)}>
                         <div className='flex flex-col items-center justify-center w-full gap-y-10'>
