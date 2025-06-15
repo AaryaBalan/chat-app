@@ -1,3 +1,4 @@
+import { identicon, rings, shapes } from "@dicebear/collection";
 import React from "react";
 
 // format the user message
@@ -33,8 +34,15 @@ export const toastOptions = {
     autoClose: 3000,
     pauseOnHover: true,
     draggable: true,
-    theme: "Dark",
+    theme: "dark",
 };
+
+// avatar 
+export const avatarTypes = {
+    identicon: identicon,
+    rings: rings,
+    shapes: shapes
+}
 
 export const BASE_URL = window.location.hostname === "localhost" ? "http://localhost:5000" : "http://192.168.31.103:5000";
 
@@ -52,3 +60,7 @@ export const updateUserRoute = `${BASE_URL}/users/update` // userId
 export const addMessageRoute = `${BASE_URL}/message/add`
 export const allMessageRoute = `${BASE_URL}/message/all`
 export const unseenMessageRoute = `${BASE_URL}/message/unseen`
+
+// room routes
+export const createRoomRoute = `${BASE_URL}/room/create`
+export const getAllRooms = `${BASE_URL}/room/all`

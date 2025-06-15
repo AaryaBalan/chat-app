@@ -60,7 +60,7 @@ const SetAvatar = () => {
 
     return (
         <>
-            <div className='bg-[#131324] min-h-[100dvh] w-full flex justify-center items-center px-4 py-8'>
+            <div className='bg-[#131324] min-h-screen w-full flex justify-center items-center px-4 py-8'>
                 <div className='bg-[#00000076] w-full max-w-2xl rounded-lg p-8 flex flex-col gap-y-10'>
                     <h1 className='text-white text-center text-4xl font-bold'>Pick your Avatar</h1>
                     <div className='flex flex-wrap justify-center items-center gap-4 md:gap-x-8 md:gap-y-10 mt-6'>

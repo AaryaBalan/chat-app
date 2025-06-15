@@ -7,6 +7,8 @@ import Chat from './pages/Chat';
 import Settings from './pages/Settings';
 import Explore from './pages/Explore';
 import UserInfo from './components/UserInfo';
+import Groups from './pages/Groups';
+import GroupIcons from './components/GroupIcons';
 
 const App = () => {
   return (
@@ -19,6 +21,8 @@ const App = () => {
         <Route path='/' element={<Chat />} />
         <Route path='/message/:id' element={<Chat />} />
         <Route path='/explore' element={<Explore />} />
+        <Route path='/groups' element={<Groups />} />
+        <Route path='/groups/1' element={<GroupIcons />} />
         <Route path='/info' element={<UserInfo />} />
       </Routes>
     </Router>

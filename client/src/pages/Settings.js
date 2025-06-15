@@ -91,7 +91,7 @@ const Settings = () => {
 
     return (
         <>
-            <div className="bg-[#131324] min-h-[100dvh] w-full flex justify-center items-center px-4 py-10">
+            <div className="bg-[#131324] min-h-screen w-full flex justify-center items-center px-4 py-10">
                 <Navbar />
                 <div className="bg-[#00000076] w-full max-w-5xl rounded-lg p-8">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-6 gap-y-10">

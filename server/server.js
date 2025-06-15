@@ -31,10 +31,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const messageRoutes = require('./routes/messageRoutes');
+const roomRoutes = require('./routes/roomRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/message', messageRoutes)
+app.use('/room', roomRoutes)
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('MongoDB connected'))

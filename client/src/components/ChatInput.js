@@ -4,7 +4,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import EmojiPicker from 'emoji-picker-react';
 import axios from 'axios';
 import notification from '../assets/notification.mp3'
-import { formatMessage, BASE_URL, addMessageRoute } from '../utilities/utility';
+import { formatMessage, addMessageRoute } from '../utilities/utility';
 
 const ChatInput = ({
     setUnseen,
