@@ -1,6 +1,8 @@
 const { default: mongoose } = require('mongoose');
 const { getMessageById } = require('./messageController');
 const { setOnline, setOffline, getUserById } = require('./userController');
+const GroupMessage = require('../models/groupMessageModel')
+const User = require('../models/userModel')
 
 const socketControllers = (io) => {
     return socket => {
@@ -51,6 +53,59 @@ const socketControllers = (io) => {
                 socket.to(socketIfOfWaitingUser).emit('typing', users)
             }
         })
+
+        socket.on('joinedByButton', ({ username, roomId }) => {
+            socket.join(roomId)
+            console.log(`${username} joined room ${roomId}`);
+            socket.to(roomId).emit('groupMessage', {
+                type: "info",
+                message: `${username} has joined the group`,
+                roomId
+            })
+        })
+
+        socket.on('joined', ({ username, roomId }) => {
+            socket.join(roomId)
+        })
+
+        socket.on('groupMessage', async (message) => {
+            try {
+                const latestMessage = await GroupMessage.findOne({ roomId: message.roomId })
+                    .sort({ createdAt: -1 })
+                    .populate('senderId', 'username profileImage') // if you want to include user info
+                    .populate({
+                        path: 'replyTo',
+                        populate: {
+                            path: 'senderId',
+                            select: 'username'
+                        }
+                    })
+                    .exec();
+
+                console.log(latestMessage); // ✅ Will log the latest message object
+
+                // Emit the latest message to other users in the room
+                socket.to(message.roomId).emit('groupMessage', {
+                    ...latestMessage.toObject(),
+                    type: 'message',
+                });
+
+            } catch (error) {
+                console.error('Error fetching latest message:', error);
+            }
+        });
+
+        socket.on('groupTyping', async ({ roomId, userId }) => {
+            try {
+                const user = await User.findById(userId)
+                console.log(user)
+                socket.join(roomId)
+                socket.to(roomId).emit('groupTyping', user)
+            } catch (err) {
+                console.log(err)
+            }
+        })
+
 
         socket.on('disconnect', () => {
             if (id) {

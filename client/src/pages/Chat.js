@@ -4,29 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import Contact from '../components/Contact';
 import ChatArea from '../components/ChatArea';
 import DefaultChat from '../components/DefaultChat';
-import { io } from 'socket.io-client'
 import Navbar from '../components/Navbar';
 import { recentUsersRoute, unseenMessageRoute, usersExpectMeRoute } from '../utilities/utility';
 
-const Chat = () => {
+const Chat = (
+    {
+        socketRef,
+        onlineUsers,
+        isLoaded
+    }
+) => {
     const navigate = useNavigate();
 
     // userlist => contacts
     //online users => contacts
     const [userList, setUserList] = useState([]);
-    const [onlineUsers, setOnlineUsers] = useState([])
     const [currentUser, setCurrentUser] = useState(undefined);
     const [latestMessage, setLatestMessage] = useState("")
-
-    // checks if all stats were loaded
-    const [isLoaded, setIsLoaded] = useState(false);
 
     // chat person => goes to all chat components
     //socket ref => goes to all chat components
     const [chatPerson, setChatPerson] = useState(undefined);
     const [showUserInfo, setShowUserInfo] = useState(false)
     const [unseen, setUnseen] = useState([])
-    const socketRef = useRef()
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -71,16 +71,6 @@ const Chat = () => {
         }
         fetchUser()
     }, [latestMessage])
-
-    useEffect(() => {
-        if (currentUser && currentUser._id) {
-            socketRef.current = io('http://192.168.31.103:5000')
-            socketRef.current.emit('online', currentUser._id)
-            socketRef.current.emit('addUser', currentUser._id)
-            socketRef.current.on('online', users => setOnlineUsers(users))
-            setIsLoaded(true);
-        }
-    }, [currentUser])
 
     function handleChatPerson(person) {
         setChatPerson(person);

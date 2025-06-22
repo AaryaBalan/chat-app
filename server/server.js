@@ -32,11 +32,13 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const messageRoutes = require('./routes/messageRoutes');
 const roomRoutes = require('./routes/roomRoutes');
+const groupMessageRoutes = require('./routes/groupMessageRoutes')
 
 app.use('/api/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/message', messageRoutes)
 app.use('/room', roomRoutes)
+app.use('/groupMessage', groupMessageRoutes)
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('MongoDB connected'))

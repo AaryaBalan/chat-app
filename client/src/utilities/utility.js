@@ -64,3 +64,10 @@ export const unseenMessageRoute = `${BASE_URL}/message/unseen`
 // room routes
 export const createRoomRoute = `${BASE_URL}/room/create`
 export const getAllRooms = `${BASE_URL}/room/all`
+export const getRoomByIdRoute = `${BASE_URL}/room` // room id
+export const getRecentRoomsRoute = `${BASE_URL}/room/recent` // pass userid in body
+export const updateRoomRoute = `${BASE_URL}/room/update/join`
+
+// group message routes 
+export const addGroupMessageRoute = `${BASE_URL}/groupMessage/add`
+export const getGroupMessageByRoomIdRoute = `${BASE_URL}/groupMessage/message` // roomId

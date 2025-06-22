@@ -54,17 +54,12 @@ const GroupIcons = ({
                     />
                 ))}
             </div>
-            <div className='flex justify-between gap-x-40'>
+            <div className='flex justify-end ml-auto px-10'>
                 <button
                     onClick={generateAvatars}
                     className='bg-[#673ab7] text-white font-bold py-2 rounded-lg w-fit px-4 hover:bg-[#ea4335] transition duration-300 cursor-pointer flex items-center gap-x-2'
                 >
                     <TfiReload size={20} /> <span>Load more avatar...</span>
-                </button>
-                <button
-                    className='bg-[#fbbc05] text-black font-bold py-2 rounded-lg w-fit px-4 hover:bg-[#34a853] transition duration-300 cursor-pointer'
-                >
-                    Set
                 </button>
             </div>
         </div>

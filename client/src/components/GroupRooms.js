@@ -1,51 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { getAllRooms } from '../utilities/utility';
+import { getAllRooms, getRecentRoomsRoute } from '../utilities/utility';
 import { createAvatar } from '@dicebear/core';
 import { avatarTypes } from '../utilities/utility';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import BearAvatar from './BearAvatar';
 
-const GroupRooms = () => {
-    const [rooms, setRooms] = useState([]);
+const GroupRooms = ({
+    rooms,
+    setRooms,
+    groupMessages
+}) => {
+    const { id } = useParams()
 
     useEffect(() => {
-        const getRooms = async () => {
+        const getRecentRooms = async () => {
             try {
+                const { data } = await axios.post(getRecentRoomsRoute, {
+                    userId: JSON.parse(localStorage.getItem('user'))._id
+                })
+                const recentRooms = data
+                const recentRoomsId = data.map(room => room._id)
                 const response = await axios.get(getAllRooms);
                 const roomData = response.data;
-
-                const enrichedRooms = roomData.map((room) => {
-                    const { avatar = {} } = room;
-                    const { svgId, type } = avatar;
-
-                    let svg = '';
-                    if (svgId && type && avatarTypes[type]) {
-                        const generatedAvatar = createAvatar(avatarTypes[type], {
-                            seed: svgId,
-                            rowColor: ['4285f4', 'ea4335', 'fbbc05', '34a853', '673ab7', '000000'],
-                            shape1Color: ['4285f4', 'ea4335', 'fbbc05', '34a853', '673ab7', '000000'],
-                            shape2Color: ['4285f4', 'ea4335', 'fbbc05', '34a853', '673ab7', '000000'],
-                            ringColor: ['4285f4', 'ea4335', 'fbbc05', '34a853', '673ab7', '000000'],
-                            backgroundColor: ['4285f4', 'ea4335', 'fbbc05', '34a853', '673ab7', '000000'],
-                        });
-                        svg = generatedAvatar.toString();
-                    }
-                    return {
-                        ...room,
-                        avatar: {
-                            ...avatar,
-                            svg, // add svg string into avatar object
-                        }
-                    };
-                });
-
-                setRooms(enrichedRooms);
+                const otherRooms = roomData.filter(room => !recentRoomsId.includes(room._id))
+                setRooms([...recentRooms, ...otherRooms])
             } catch (err) {
-                console.error("Error fetching rooms:", err);
+                console.log(err)
             }
-        };
+        }
+        getRecentRooms()
 
-        getRooms();
-    }, []);
+    }, [groupMessages]);
+    console.log(rooms)
 
     return (
         <div className='mt-5'>
@@ -57,22 +45,18 @@ const GroupRooms = () => {
                 />
             </div>
             <div className='mt-10'>
-                <div className='flex flex-col gap-y-5'>
+                <div className='flex flex-col gap-y-4'>
                     {rooms.map((room, index) => (
-                        <div
+                        <Link to={`/groups/${room._id}`}
                             key={room._id || index}
-                            className='flex gap-x-3 items-center border-b border-[#683ab79d] py-2 cursor-pointer'
+                            className={`${room._id === id ? 'bg-[#ea443556]' : 'bg-[hsl(259,47%,15%)] hover:bg-[#ffffff2a]'}  flex gap-x-3 items-center rounded-2xl p-2 cursor-pointer`}
                         >
-                            <img
-                                src={`data:image/svg+xml;utf8,${encodeURIComponent(room.avatar.svg)}`}
-                                alt="Avatar"
-                                className='w-12 h-12 rounded-full'
-                            />
+                            <BearAvatar seed={room.avatar.svgId} type={room.avatar.type} />
                             <div className='truncate flex flex-col gap-y-1'>
                                 <div className='text-white font-medium'>{room.name}</div>
                                 <div className='text-white truncate text-sm'>{room.description}</div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

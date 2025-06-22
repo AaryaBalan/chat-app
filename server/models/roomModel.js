@@ -31,8 +31,16 @@ const roomSchema = new mongoose.Schema({
         required: true,
     },
     avatar: {
-        svgId: { type: String, required: true },
-        type: { type: String, required: true }
+        svgId: {
+            type: String,
+            required: true,
+            default: 'default'
+        },
+        type: {
+            type: String,
+            required: true,
+            default: 'default'
+        }
     }
 }, { timestamps: true });
 

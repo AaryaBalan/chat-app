@@ -9,7 +9,9 @@ import group from '../assets/group.svg'
 const CreateGroup = ({
     setShowGroupIcon,
     roomDetails,
-    setRoomDetails
+    setRoomDetails,
+    setCreateGroup,
+    socketRef
 }) => {
 
     const handleRoom = (e) => {
@@ -22,23 +24,38 @@ const CreateGroup = ({
 
     const createRoom = async (e) => {
         e.preventDefault()
+        if (!roomDetails.svg) {
+            toast.error('Please select the group icon', toastOptions)
+            setShowGroupIcon(true)
+            return
+        }
         try {
             const { data } = await axios.post(createRoomRoute, {
                 ...roomDetails,
                 admin: JSON.parse(localStorage.getItem('user'))._id,
-                svgId: roomDetails.svg.svgId,
-                type: roomDetails.svg.type
+                svgId: roomDetails?.svg?.svgId || "default",
+                type: roomDetails?.svg?.type || 'default'
             })
-            console.log(data)
+
             if (data.status) {
                 toast.success("Room created successfully!", toastOptions)
-            } else {
+                // emiting a new user joined event
+                socketRef.current.emit('joined', {
+                    username: JSON.parse(localStorage.getItem('user')).username,
+                    roomId: data.room._id
+                })
+
+                setShowGroupIcon(false)
+                setInterval(() => {
+                    setCreateGroup(false)
+                }, 1500)
+            }
+            else if (data.status === false) {
                 toast.error(data.message, toastOptions)
             }
         } catch (err) {
             toast.error('Internal server error', toastOptions)
         }
-
     }
 
     return (
@@ -49,7 +66,7 @@ const CreateGroup = ({
                         {
                             roomDetails.svg ?
                                 <img src={`data:image/svg+xml;utf8,${encodeURIComponent(roomDetails.svg.svg)}`} alt="Avatar" className='w-24 h-24 border-[#673ab7] border-3 rounded-full' /> :
-                                <img src={group} alt="" className='w-24 h-24 border-[#673ab7] border-3 rounded-full'/>
+                                <img src={group} alt="" className='w-24 h-24 border-[#673ab7] border-3 rounded-full' />
                         }
                         <div onClick={() => setShowGroupIcon(prev => !prev)} className='absolute right-0 bottom-0 bg-[#34a853] w-7 h-7 flex items-center justify-center rounded-full cursor-pointer'><MdEdit size={20} color='white' /></div>
                     </div>
