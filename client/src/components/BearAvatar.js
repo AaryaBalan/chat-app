@@ -30,7 +30,7 @@ const BearAvatar = ({ seed = 'default', type = 'rings', size = 48 }) => {
             alt="Avatar"
             width={size}
             height={size}
-            className="rounded-full object-cover"
+            className="rounded-full object-cover border-2 border-black"
         />
     );
 };

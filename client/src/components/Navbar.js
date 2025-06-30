@@ -56,7 +56,7 @@ const Navbar = () => {
                     }`}
             >
                 <div className="p-4 mt-14">
-                    <h2 className="text-xl font-bold text-yellow-400 mb-6 px-3">Hello World</h2>
+                    <h2 className="text-xl font-bold text-yellow-400 mb-6 px-3">Chat system</h2>
                     {navItems.map((item, index) => (
                         <Link to={item.link}
                             onClick={() => setIsOpen(false)}

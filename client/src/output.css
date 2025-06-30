@@ -880,9 +880,6 @@
   .text-\[\#673ab7\] {
     color: #673ab7;
   }
-  .text-\[\#4285f4\] {
-    color: #4285f4;
-  }
   .text-\[\#ea4335\] {
     color: #ea4335;
   }
@@ -897,9 +894,6 @@
   }
   .text-\[hsl\(262\,52\%\,20\%\)\] {
     color: hsl(262,52%,20%);
-  }
-  .text-\[white\] {
-    color: white;
   }
   .text-black {
     color: var(--color-black);
@@ -961,9 +955,6 @@
     transition-property: transform, translate, scale, rotate;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
-  }
-  .delay-3000 {
-    transition-delay: 3000ms;
   }
   .duration-300 {
     --tw-duration: 300ms;
